@@ -1,23 +1,4 @@
-/********** Colors **********/
-
-.purple {
-    background-color: rgb(181, 166, 212);
-}
-.purple::hover {
-    background-color: rgb(218,211,233);
-}
-
-.btn-purple {
-    color: white;
-    background-color: rgb(181, 166, 212);
-    border-color: rgb(181, 166, 212);
-}
-
-.btn-purple:hover{
-    color: white;
-    background-color: rgb(142,125,192);
-    border-color: rgb(142,125,192);
-}
+/******************** UNIVERSAL ELEMENTS ********************/
 
 .btn-xl {
     padding: 0.8rem 1.6rem;
@@ -26,17 +7,66 @@
     border-radius: 0.5rem;
     margin: auto;
 }
+.progress {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    border-radius: 0px;
+}
 
-/********** Font Styling **********/
+/******************** QUIZ ELEMENTS ********************/
+.quiz-img {
+    position: relative;
+}
+
+.quiz-img img {
+    width: 100%;   
+}
+
+.quiz-pose-name {
+    text-align: center;
+    padding: .4rem .75rem;
+    border-radius: 0.5rem;
+    border: 2px solid rgb(181, 166, 212);
+    margin-top: 1rem;
+    background-color: white;
+    z-index: 2;
+}
+
+.quiz-pose-name:hover {
+    background-color: rgb(217,210,232);
+}
+
+/******************** COLORS ********************/
+
+.bg-purple {
+    background-color: rgb(181, 166, 212);
+}
+.bg-light-purple {
+    background-color: rgb(217,210,232);
+}
+.btn-purple {
+    color: white;
+    background-color: rgb(181, 166, 212);
+    border-color: rgb(181, 166, 212);
+}
+.btn-purple:hover{
+    color: white;
+    background-color: rgb(142,125,192);
+    border-color: rgb(142,125,192);
+}
+
+/******************** FONTS & TEXT ********************/
 
 body {
     font-family: 'Lato', sans-serif;
 }
-
 .text-center {
     text-align: center;
 }
-
+.nav-link {
+    font-size: 1.25rem;
+}
 .title {
     font-family: 'Playfair Display', serif;
     font-weight: bold;
@@ -44,7 +74,13 @@ body {
     text-align: center;
     color: rgb(181, 166, 212);
 }
-
-.nav-link {
-    font-size: 1.25rem;
+.quiz-heading {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 28pt;
+    color: rgb(181, 166, 212);
+    padding-bottom: 0.75rem;
+}
+.quiz-question {
+    font-size: 2rem;
 }
