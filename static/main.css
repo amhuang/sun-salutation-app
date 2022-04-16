@@ -7,9 +7,42 @@
     background-color: rgb(218,211,233);
 }
 
+.btn-purple {
+    color: white;
+    background-color: rgb(181, 166, 212);
+    border-color: rgb(181, 166, 212);
+}
+
+.btn-purple:hover{
+    color: white;
+    background-color: rgb(142,125,192);
+    border-color: rgb(142,125,192);
+}
+
+.btn-xl {
+    padding: 0.8rem 1.6rem;
+    font-size: 2rem;
+    line-height: 1.5;
+    border-radius: 0.5rem;
+    margin: auto;
+}
+
 /********** Font Styling **********/
+
 body {
     font-family: 'Lato', sans-serif;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.title {
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    font-size: 56pt;
+    text-align: center;
+    color: rgb(181, 166, 212);
 }
 
 .nav-link {
