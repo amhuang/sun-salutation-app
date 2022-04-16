@@ -1,0 +1,17 @@
+/********** Colors **********/
+
+.purple {
+    background-color: rgb(181, 166, 212);
+}
+.purple::hover {
+    background-color: rgb(218,211,233);
+}
+
+/********** Font Styling **********/
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+.nav-link {
+    font-size: 1.25rem;
+}
