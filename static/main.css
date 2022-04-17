@@ -16,13 +16,15 @@
 }
 
 /******************** QUIZ ELEMENTS ********************/
+
 .quiz-pose img {
     max-height: 120px;
+    max-width: 100%;
     margin: auto;
 }
 .quiz-label {
     text-align: center;
-    display:inline-block;
+    display: inline-block;
     padding: .4rem .75rem;
     border-radius: 0.5rem;
     border: 2px solid rgb(181, 166, 212);
@@ -41,6 +43,8 @@
 .quiz-label.dropped {
     margin: 0;
     width: 100%;
+    top: 0; 
+    left: 0;
 }
 .quiz-label.correct {
     border: 2px solid #28a745;
@@ -54,14 +58,51 @@
     border: 2px solid whitesmoke;
     height: calc(2.5rem + 4px);
     width: 100%;
-    margin-top: 1rem;
     margin-bottom: 0.25rem;
 }
 .quiz-label-drop.incorrect {
     border: 2px solid #DC3553;
 }
+.quiz-img-drag {
+    max-width: 100%;
+    padding: .5rem .5rem;
+    border-radius: 0.5rem;
+    border: 2px solid rgb(181, 166, 212);
+    aspect-ratio: 1;
+}
+.quiz-img-drag img {
+    max-width: 100%;
+    margin: auto;
+}
+.quiz-img-drop {
+    aspect-ratio: 1;
+    background-color: whitesmoke;
+    border-radius: 0.5rem;
+    font-size: 1.25rem;
+}
+.quiz-img-drop.taken p {
+    display: none;
+}
+.quiz-img-drop.ui-draggable-active p {
+    display: inline;
+}
+.align-middle {
+    position: relative;
+    top: 50%;
+    transform: translateY(calc(-50%));
+}
+hr {
+    margin: 1.5rem 0;
+}
 #matching-options {
     min-height: 3rem;
+}
+#ordering-row {
+    padding: 0 0%;
+}
+#ordering-options {
+    min-height: 3rem;
+    padding: 0 5%;
 }
 .ui-draggable {
     cursor: move;
@@ -69,7 +110,6 @@
 .ui-draggable-dragging {
     z-index: 10;
 }
-
 .ui-droppable-hover  {
     background-color: rgb(228, 228, 228);
 }
@@ -99,9 +139,6 @@
 body {
     font-family: 'Lato', sans-serif;
 }
-.text-center {
-    text-align: center;
-}
 .nav-link {
     font-size: 1.25rem;
 }
@@ -117,7 +154,7 @@ body {
     font-weight: 700;
     font-size: 20pt;
     color: rgb(181, 166, 212);
-    /*padding-bottom: 0.75rem;*/
+    margin-bottom: 1rem;
 }
 .quiz-question {
     font-size: 2rem;
