@@ -21,14 +21,24 @@ def home():
 def learn():
     return render_template('learn.html')
 
-
-
-
-@app.route('/quiz/<id>')
+answers = {}
+@app.route('/quiz/<id>', methods = ['POST', 'GET'])
 def quiz(id=None):
-    id = int(id)
-    quiz_len = 12
+    if request.method == 'GET':
+        data = get_quiz(int(id))
+        return render_template('quiz.html', data=data)
+    else:
+        answer = request.get_json()
+        print(answer)
+        print(id)
+        answers[id] = answer[id]
+        return
+        
     
+
+def get_quiz(id):
+    quiz_len = 12
+        
     # Pose name matching question
     if 1 <= id and id < 3:
         type = "matching"
@@ -46,10 +56,11 @@ def quiz(id=None):
     data = { "id": id,
             "len": quiz_len,
             "type": type,
-            "imgs": imgs
+            "imgs": imgs,
+            "answers": answers[id] if id in answers else ""
             }
-    
-    return render_template('quiz.html', data=data)
+    print(data)
+    return data
 
 if __name__ == '__main__':
    app.run(debug = True)

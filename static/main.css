@@ -8,34 +8,68 @@
     margin: auto;
 }
 .progress {
-    position: absolute;
+    position: fixed;
     bottom: 0px;
     width: 100%;
     border-radius: 0px;
+    z-index: 100;
 }
 
 /******************** QUIZ ELEMENTS ********************/
-.quiz-img {
-    position: relative;
+.quiz-pose img {
+    max-height: 120px;
+    margin: auto;
 }
-
-.quiz-img img {
-    width: 100%;   
-}
-
-.quiz-pose-name {
+.quiz-pose-label {
     text-align: center;
+    display:inline-block;
     padding: .4rem .75rem;
     border-radius: 0.5rem;
     border: 2px solid rgb(181, 166, 212);
-    margin-top: 1rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
+    margin-right: 10px;
     background-color: white;
     z-index: 2;
 }
+.quiz-pose-label.dropped {
+    margin: 0;
+    width: 100%;
+}
 
-.quiz-pose-name:hover {
+.quiz-pose-label.correct {
+    border: 2px solid #28a745;
+}
+.quiz-pose-label.incorrect {
+    border: 2px solid #DC3553;
+}
+
+.quiz-pose-label:hover {
+    cursor: move;
     background-color: rgb(217,210,232);
 }
+.quiz-blank {
+    background-color: whitesmoke;
+    border-radius: 0.5rem;
+    border: 2px solid whitesmoke;
+    height: calc(2.5rem + 4px);
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
+}
+.quiz-blank.incorrect {
+    border: 2px solid #DC3553;
+}
+
+.ui-draggable-dragging {
+    cursor: move;
+    z-index: 10;
+}
+
+.ui-droppable-hover  {
+    background-color: rgb(228, 228, 228);
+}
+
 
 /******************** COLORS ********************/
 
@@ -77,9 +111,9 @@ body {
 .quiz-heading {
     font-family: 'Playfair Display', serif;
     font-weight: 700;
-    font-size: 28pt;
+    font-size: 20pt;
     color: rgb(181, 166, 212);
-    padding-bottom: 0.75rem;
+    /*padding-bottom: 0.75rem;*/
 }
 .quiz-question {
     font-size: 2rem;
