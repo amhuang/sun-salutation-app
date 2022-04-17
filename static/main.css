@@ -69,10 +69,18 @@
     border-radius: 0.5rem;
     border: 2px solid rgb(181, 166, 212);
     aspect-ratio: 1;
+    top: 0; 
+    left: 0;
 }
 .quiz-img-drag img {
     max-width: 100%;
     margin: auto;
+}
+.quiz-img-drag.correct {
+    border: 2px solid #28a745;
+}
+.quiz-img-drag.incorrect {
+    border: 2px solid #DC3553;
 }
 .quiz-img-drop {
     aspect-ratio: 1;
@@ -80,11 +88,14 @@
     border-radius: 0.5rem;
     font-size: 1.25rem;
 }
-.quiz-img-drop.taken p {
-    display: none;
+.quiz-img-drop.incorrect {
+    border: 2px solid #DC3553;
 }
 .quiz-img-drop.ui-draggable-active p {
     display: inline;
+}
+.quiz-img-drop.taken p {
+    display: none;
 }
 .align-middle {
     position: relative;
