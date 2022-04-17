@@ -21,24 +21,22 @@ def home():
 def learn():
     return render_template('learn.html')
 
-answers = {}
+
+quiz_answers = {}
+QUIZ_LEN = 12
 @app.route('/quiz/<id>', methods = ['POST', 'GET'])
 def quiz(id=None):
+    id = int(id)
     if request.method == 'GET':
-        data = get_quiz(int(id))
+        data = get_quiz_data(id)
         return render_template('quiz.html', data=data)
     else:
         answer = request.get_json()
-        print(answer)
-        print(id)
-        answers[id] = answer[id]
-        return
+        quiz_answers[id] = answer
+        data = get_quiz_data(id)
+        return jsonify(data=data)
         
-    
-
-def get_quiz(id):
-    quiz_len = 12
-        
+def get_quiz_data(id):
     # Pose name matching question
     if 1 <= id and id < 3:
         type = "matching"
@@ -53,13 +51,13 @@ def get_quiz(id):
     elif 11 <= id and id < 13:
         type = "ordering" 
 
-    data = { "id": id,
-            "len": quiz_len,
-            "type": type,
-            "imgs": imgs,
-            "answers": answers[id] if id in answers else ""
-            }
-    print(data)
+    data = { 
+        "id": id,
+        "len": QUIZ_LEN,
+        "type": type,
+        "imgs": imgs,
+        "answer_data": quiz_answers[id] if id in quiz_answers else "",
+    }
     return data
 
 if __name__ == '__main__':

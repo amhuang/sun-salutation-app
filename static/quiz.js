@@ -4,19 +4,18 @@ $(document).ready(function(){
 
     displayProgress()
     bindPrevBtn()
-
+    console.log(data)
+    
     if (data["type"] == "matching") {
-        if (!data["answered"]) {
-            matching()
-        }
-        else {
-            loadMatchingAnswers()
-            checkMatching()
+        if (data["answer_data"] == "") {
+            loadMatching()
+        } else {
+            loadMatchingResponse(data["answer_data"])
         }
     } else if (data["type"] == "muscles") {
-        muscleId()
+        loadMuscleId()
     } else if (data["type"] == "ordering") {
-        ordering()
+        loadOrdering()
     }
 
 })
@@ -29,6 +28,7 @@ function displayProgress() {
     prog.css("width", percent + "%")
 } 
 
+// Binds bottom left button to prev question
 function bindPrevBtn() {
     // Add previous button if not the first question
     if (1 < data["id"]) {
@@ -39,7 +39,10 @@ function bindPrevBtn() {
         $("#quiz-nav").append(prevBtn)
     }
 }
+
+// Binds bottom right button to next question
 function bindNextBtn () {
+    $("#next-btn").html("Next")
     $("#next-btn").click(function () {
         if (data["id"] < data["len"]) {
             window.location.href = "/quiz/" + (data["id"] + 1)
@@ -47,22 +50,21 @@ function bindNextBtn () {
     })
 }
 
-// Displays a matching name to pose question
-function matching() {
+// Matching question: displays unanswered questions
+function loadMatching() {
+    // Display header, images, and answer bank
     let c = $("#content")
-    let header = $("<div class='quiz-heading'>").html("Part 1: Match the name to the pose")
-    //let question = $("<div>").html("Drag the name to the diagram.")
-    c.append(header)
+    let posenames = showMatchingGraphics(c, 2, 4)
+    shuffle(posenames)
+    showMatchingOpts(c, posenames)
 
-    displayPoseImgs(c, 2, 4)
-    c.append($("<hr>"))
-    displayPoseNames(c)
-
+    // Event binding
+    $("#next-btn").html("Check")
     $("#next-btn").click(function() {
         checkMatching()
     })
-    $(".quiz-pose-label").draggable({  revert: "invalid" })
-    $(".quiz-blank").droppable({
+    $(".quiz-label").draggable({  revert: "invalid" })
+    $(".quiz-label-drop").droppable({
         accept: function(ui) {
             return $(this).children().length == 0
         },
@@ -72,7 +74,7 @@ function matching() {
             $(dropped).detach().css({top: 0,left: 0}).appendTo($(this));
         }
     })
-    $("#bank").droppable({
+    $("#matching-options").droppable({
         drop: function(event, ui) {
             let dropped = ui.draggable
             $(dropped).removeClass("dropped")
@@ -81,51 +83,94 @@ function matching() {
     })
 }
 
+// Matching question: Loads data from previous response
+function loadMatchingResponse(data) {
+    // Display header, pose images
+    let c = $("#content").empty()
+    showMatchingGraphics(c, 2, 4)
+    
+    // Display right/wrong feedback
+    let usedAnswers = []
+    $(".quiz-label-drop").each(function(i) {
+        response = data["responses"][i]
+        let label = $("<div class='quiz-label'>").html(response)
+        
+        if (response == "") {               // Blank response (cont loop)
+            $(this).addClass("incorrect")
+            return
+        } else if (data["correct"][i]) {    // Answer is correct
+            label.addClass("dropped correct")
+        } else {                            // Answer incorrect
+            label.addClass("dropped incorrect")
+        }
+        $(this).append(label)
+        usedAnswers.push(response)
+    })
+
+    // Show unused answers in answer bank and next button
+    showMatchingOpts(c, data["unused"])
+    $(".quiz-label").addClass("locked")
+    bindNextBtn()
+    console.log("from load matching response", data)
+}
+
+// Matching question: Checks answers, saves data on user's response
 function checkMatching() {
-    // check responses with answers
+    // check responses, send answers and score to server
     let poses = $('.quiz-pose')
     let score = 0
     let answers = []
-    $('.quiz-blank').each(function(i) {
+    let responses = []
+    let correct = []
+
+    // Score and collect responses and answers
+    $('.quiz-label-drop').each(function(i) {
         let response = ($(this).children().html())
-        console.log(response)
         let answer = poses.eq(i).data("name")
-        answers.push(answer)
 
-        if (typeof response == "undefined") {
-            $(this).addClass("incorrect")
-        } else if (response == answer) {
-            $(this).children().addClass("correct")
+        if (response == answer) {
             score += 1
+            correct.push(true)
+        } else if (typeof response == "undefined") {
+            correct.push(false)
+            response = ""
         } else {
-            $(this).children().addClass("incorrect")
+            correct.push(false)
         }
-    })
-    saveAnswers(answers)
-
-    // Disable draggable labels
-    $( ".quiz-pose-label" ).draggable({
-        disabled: true
+        answers.push(answer)
+        responses.push(response)
     })
 
-    // Bind next button 
-    $("#next-btn").html("Next")
-    bindNextBtn()
+    // Get unused options
+    let unusedLabels = $('.quiz-label').filter(':not(.dropped)')
+    console.log(unusedLabels)
+    let unused = []
+    unusedLabels.each( function(i, label) {
+        unused.push(label.innerHTML) 
+    })
+    answerData = {
+        "id": data["id"],
+        "score": score,
+        "answers": answers,
+        "responses": responses,
+        "correct": correct,
+        "unused": unused
+    }
+    saveAnswers(answerData)
 }
 
 // Sends an array of answers to save for question <id>
-function saveAnswers(answers) {
-    save_data = {}
-    save_data[data["id"]] = answers
-    console.log(save_data)
+function saveAnswers(answerData) {
+    console.log("saving", answerData)
     $.ajax({
         type: "POST",
         url: "" + data["id"],                
         dataType : "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(save_data),
+        data: JSON.stringify(answerData),
         success: function(result){
-            console.log("success")
+            console.log(result["data"])
+            loadMatchingResponse(result["data"]["answer_data"])
         },
         error: function(request, status, error){
             console.log("Error");
@@ -136,8 +181,11 @@ function saveAnswers(answers) {
     });
 }
 
+// Msatching question: Displays header, images, and empty answer boxes
+function showMatchingGraphics(parent, rows, cols) {
+    let header = $("<div class='quiz-heading'>").html("Part 1: Match the name to the pose")
+    parent.append(header)
 
-function displayPoseImgs(parent, rows, cols) {
     let posenames = []
     for (let i = 0; i < rows; i++) {
         let row = $("<div class='row'>")
@@ -146,37 +194,34 @@ function displayPoseImgs(parent, rows, cols) {
             filepath = data['imgs'][i*cols + j]
             filename = filepath.split("/").pop()
             posename = filename.split(".")[0]
+            posenames.push(posename)
 
             let col = $("<div class='col-md-"+12/cols+" quiz-pose' data-name='"+posename+"'>")
-            let img = $("<img />").attr({src: data['imgs'][i*cols + j],
-                                        class: "mx-auto d-block"})
-            let label = $("<div class='quiz-blank'>")
+            let img = $("<img />").attr({src: filepath, class: "mx-auto d-block"})
+            let label = $("<div class='quiz-label-drop'>")
 
             col.append(label, img)
             row.append(col)
         }
-        parent.append(row)
+        parent.append(row, $("<hr>"))
     }
+    return posenames
 }
 
-function displayPoseNames(parent) {
+// Matching question: Shows answer bank with posnames for options
+function showMatchingOpts(parent, posenames) {
     let row = $("<div class='row'>")
-    let col = $("<div id='bank' class='col-md'>")
-    col.css("min-height", "3rem")
-
-    for (let i = 0; i < 8; i++) {
-        filename = data['imgs'][i].split("/").pop()
-        posename = filename.split(".")[0]
-        let label = $("<div class='quiz-pose-label'>").html(posename)
+    let col = $("<div id='matching-options' class='col-md'>")
+    posenames.forEach((name) => {
+        let label = $("<div class='quiz-label'>").html(name)
         col.append(label)
-    }
-    row.append(col)
-    parent.append(row)
+    })
+    parent.append(row.append(col))
 }
 
 
 // Displays an identifying muscles activated by poses question
-function muscle() {
+function loadMuscleId() {
     c = $("#content")
     header = $("<div class='quiz-heading'>").html("Part 2: Muscles Activated")
     question = $("<div>").html("Drag the name to the diagram.")
@@ -184,9 +229,21 @@ function muscle() {
 }
 
 // Displays an ordering question
-function ordering() {
+function loadOrdering() {
     c = $("#content")
     header = $("<div class='quiz-heading'>").html("Part 3: Pose Ordering")
     question = $("<div>").html("Drag the name to the diagram.")
     c.append(header,question)
+}
+
+// Shuffles an array at random
+function shuffle(arr) {
+    let rand, i = arr.length 
+    while (i != 0) {    // While there remain elements to shuffle.
+        // Pick a remaining element, swap with the current element.
+        rand = Math.floor(Math.random() * i)
+        i--
+        [arr[i], arr[rand]] = [arr[rand], arr[i]]
+    }
+    return arr
 }
