@@ -36,6 +36,13 @@ function loadInfo() {
     let col = $("<div class='col-md-6'>")
     let desc_title = $("<div class=description-title >").html("Directions:")
     col.append(desc_title)
+    d["Directions"].forEach(function(m){
+        let direction = $("<div class='quiz-question bullets'>").html("        -" + m)
+        col.append(direction)
+      })
+    row.append(col)
+    c.append(row)
+
     let muscles_title = $("<div class=description-title >").html("Muscles:")
     col.append(muscles_title)
     d["Muscles"].forEach(function(m){
