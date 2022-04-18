@@ -18,7 +18,11 @@ def home():
 
 @app.route('/learn/')
 def learn():
+    global learn
+    id = int(id)
+    data = get_learn_data(id)
     return render_template('learn.html')
+
 
 @app.route('/quiz/<id>', methods = ['POST', 'GET'])
 def quiz(id=None):
@@ -104,6 +108,7 @@ QUIZ_QUESTIONS = {
     }
 }
 '''
+
 
 if __name__ == '__main__':
    app.run(debug = True)
