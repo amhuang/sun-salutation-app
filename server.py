@@ -13,8 +13,9 @@ data = {
       "id": "1",
       "Name": "Prayer Pose",
       "Muscles": ["Pelvis", "Legs"],
-      "img": "/static/img/poses/mountain.jpeg",
+      "img": "/static/img/poses/Prayer Pose.jpeg",
       "gif": "/static/img/GIFs/1-mountain.gif",
+      "directions": ["stand at the edge with feet together", "Expand your chest and relax shoulders", "Lift both arms from side as you inhale", "Bring your palms together on exhale"],
    },
 
    "2": {
@@ -23,7 +24,7 @@ data = {
       "Muscles": ["Hamstrings","Calves", "Spine", "Chest", "Shoulders"],
       "img": "/static/img/poses/Raised Arm.jpeg",
       "gif": "/static/img/GIFs/2-raised.gif",
-
+      "directions": ["Lift arms up and back on inhale", "Stretch whole body", "Push pelvis forward to deepen stretch"],
    },
 
    "3": {
@@ -32,6 +33,7 @@ data = {
       "Muscles": ["Hamstrings","Calves","Spine"],
       "img": "/static/img/poses/Half Forward Bend.jpeg",
       "gif": "/static/img/GIFs/3-forward.gif",
+      "directions": ["Stretch forward", "Bend downwards", "Bring hands down to floor on exhale"],
    },
 
    "4": {
@@ -40,6 +42,7 @@ data = {
       "Muscles": ["Calves", "Hamstrings", "Quadriceps", "Hip Flexors"],
       "img": "/static/img/poses/Equestrian (L).jpeg",
       "gif": "/static/img/GIFs/4-equestrianL.gif",
+      "directions": ["Push right leg  back", "Look up", "Left foot between palms"]
    },
 
    "5": {
@@ -48,6 +51,7 @@ data = {
       "Muscles": ["Abs", "Obliques", "Shoulders"],
       "img": "/static/img/poses/plank.jpeg",
       "gif": "/static/img/GIFs/5-plank.gif",
+      "directions": ["Push left leg back","Do a plank with arms straight"],
    },
 
    "6": {
@@ -56,14 +60,16 @@ data = {
       "Muscles": ["Shoulders","Spine"],
       "img": "/static/img/poses/Eight Point Salute.jpeg",
       "gif": "/static/img/GIFs/6-eight.gif",
+      "directions": ["Bring knees to floor and exhale","Take hips back slightly", "Slide forward","Rest chest and chin on floor"],
    },
 
    "7": {
       "id": "7",
       "Name":"Cobra Pose",
       "Muscles": ["Lower Back", "Lats","Lower Traps"],
-      "img": "/static/img/poses/cobra.jpeg",
+      "img": "/static/img/poses/Cobra.jpeg",
       "gif": "/static/img/GIFs/7-cobra.gif",
+      "directions": ["Slide forward", "Raise chest", "Keep elbows bent"],
    },
 
    "8": {
@@ -72,6 +78,7 @@ data = {
       "Muscles":["Claves", "Hamstrings","Lats", "Spine"],
       "img": "/static/img/poses/Downward Facing Dog.jpeg",
       "gif": "/static/img/GIFs/8-downward.gif",
+      "directions": ["Lift hips", "Face chest downwards", "Keep heels to floor to deepen"],
    },
 
    "9": {
@@ -80,6 +87,7 @@ data = {
       "Muscles": ["Calves", "Hamstrings","Quadriceps","Hip Flexors"],
       "img": "/static/img/poses/Equestrian (R).jpeg",
       "gif": "/static/img/GIFs/9-equestrianR.gif",
+      "directions": ["Push right leg  back", "Look up" ,"Left foot between palms"],
    },
 
    "10": {
@@ -88,6 +96,7 @@ data = {
       "Muscles":["Hamstrings", "Calves", "Spine"],
       "img": "/static/img/poses/Half Forward Bend.jpeg",
       "gif": "/static/img/GIFs/10-forward.gif",
+      "directions": ["Stretch forward", "Bend downwards", "Bring hands down to floor on exhale"],
    },
 
    "11": {
@@ -96,6 +105,7 @@ data = {
       "Muscles": ["Hamstrings","Calves", "Spine", "Chest", "Shoulders"],
       "img": "/static/img/poses/Raised Arm.jpeg",
       "gif": "/static/img/GIFs/11-raised.gif",
+      "directions": ["Lift arms up and back on inhale", "Stretch whole body", "Push pelvis forward to deepen stretch"],
    },
 
    "12": {
@@ -104,6 +114,7 @@ data = {
       "Muscles": ["Pelvis", "Legs"],
       "img": "/static/img/poses/Prayer Pose.jpeg",
       "gif": "/static/img/GIFs/1-mountain.gif",
+      "directions": ["Straighten body", "Bring arms down"],
    }
 }
 
@@ -177,84 +188,8 @@ quiz_data = {
     #     "imgs": ["/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/calves.svg","/static/img/muscles/indiv/spine.svg","/static/img/muscles/indiv/blank.svg", "/static/img/muscles/indiv/shoulders.svg"],
     #     "user_data": "",
     # },
-    # 5: {
-    #     "id": 5,
-    #     "len": QUIZ_LEN,
-    #     "type": "muscle",
-    #     "question": "Select the muscles activated in prayer pose.",
-    #     "answers": ["Pelvis", "Legs"],
-    #     "imgs": ["/static/img/muscles/indiv/blank.svg", "/static/img/muscles/indiv/blank.svg"],
-    #     "user_data": "",
-    # },
-    # 6: {
-    #     "id": 6,
-    #     "len": QUIZ_LEN,
-    #     "type": "muscle",
-    #     "question": "Select the muscles activated in half forward bend pose.",
-    #     "answers": ["Hamstrings","Calves","Spine"],
-    #     "imgs": ["/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/calves.svg", "/static/img/muscles/indiv/spine.svg"],
-    #     "user_data": "",
-    # },
-    # 7: {
-    #     "id": 7,
-    #     "len": QUIZ_LEN,
-    #     "type": "muscle",
-    #     "question": "Select the muscles activated in equestrian pose",
-    #     "answers": ["Calves", "Hamstrings", "Quadriceps", "Hip Flexors"],
-    #     "imgs": ["/static/img/muscles/indiv/calves.svg", "/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/quads.svg", "/static/img/muscles/indiv/blank.svg"],
-    #     "user_data": "",
-    # },
-    # 8: {
-    #     "id": 8,
-    #     "len": QUIZ_LEN,
-    #     "type": "muscle",
-    #     "question": "Select the muscles activated in plank pose.",
-    #     "answers": ["Abs", "Obliques", "Shoulders"],
-    #     "imgs": ["/static/img/muscles/indiv/abs.svg", "/static/img/muscles/indiv/obliques.svg", "/static/img/muscles/indiv/shoulders.svg"],
-    #     "user_data": "",
-    # },
-
-    # 9: {
-    #     "id": 9,
-    #     "len": QUIZ_LEN,
-    #     "type": "muscle",
-    #     "question": "Select the muscles activated in eight point salute.",
-    #     "answers": ["Shoulders","Spine"],
-    #     "imgs": ["/static/img/muscles/indiv/shoulders.svg", "/static/img/muscles/indiv/spine.svg"],
-    #     "user_data": "",
-    # },
-
-    # 10: {
-    #     "id": 10,
-    #     "len": QUIZ_LEN,
-    #     "type": "muscle",
-    #     "question": "Select the muscles activated in cobra pose.",
-    #     "answers": ["Lower Back", "Lats","Lower Traps"],
-    #     "imgs": ["/static/img/muscles/indiv/lower-back.svg", "/static/img/muscles/indiv/lats.svg", "/static/img/muscles/indiv/lower-traps.svg"],
-    #     "user_data": "",
-    # },
-
-    # 11: {
-    #     "id": 11,
-    #     "len": QUIZ_LEN,
-    #     "type": "muscle",
-    #     "question": "Select the muscles activated in downward facing dog.",
-    #     "answers": ["Claves", "Hamstrings","Lats", "Spine"],
-    #     "imgs": ["/static/img/muscles/indiv/calves.svg", "/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/lats.svg", "/static/img/muscles/indiv/spine.svg"],
-    #     "user_data": "",
-    # },
-
-    # 12: {
-    #     "id": 12,
-    #     "len": QUIZ_LEN,
-    #     "type": "muscle",
-    #     "question": "Select the muscles activated in mountain pose.",
-    #     "answers": ["Pelvis", "Legs"],
-    #     "imgs": ["/static/img/muscles/indiv/blank.svg", "/static/img/muscles/indiv/blank.svg"],
-    #     "user_data": "",
-    # },
 }
-
+quiz_responses={}
 
 @app.route('/')
 def home():
