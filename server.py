@@ -131,10 +131,10 @@ quiz_data = {
     3: {
         "id": 3,
         "len": QUIZ_LEN,
-        "type": "matching",
+        "type": "ordering",
         "question": "Match the name to the pose.",
-        "answers": ["Cobra", "Downward Facing Dog", "Eight Point Salute", "Equestrian (L)", "Half Forward Bend", "Plank", "Mountain Pose", "Raised Arm"],
-        "imgs": ["/static/img/poses/Cobra.jpeg", "/static/img/poses/Eight Point Salute.jpeg", "/static/img/poses/Equestrian (L).jpeg", "/static/img/poses/Half Forward Bend.jpeg", "/static/img/poses/Plank.jpeg", "/static/img/poses/Mountain Pose.jpeg", "/static/img/poses/Raised Arm.jpeg"],
+        "answers": ["Cobra", "Downward Facing Dog", "Equestrian (R)", "Half Forward Bend", "Raised Arm", "Mountain Pose"],
+        "imgs": ["/static/img/poses/Cobra.jpeg", "/static/img/poses/Downward Facing Dog.jpeg", "/static/img/poses/Equestrian (R).jpeg", "/static/img/poses/Half Forward Bend.jpeg", "/static/img/poses/Raised Arm.jpeg", "/static/img/poses/Mountain Pose.jpeg"],
         "user_data": "",
     },
     4: {
