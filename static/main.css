@@ -1,23 +1,4 @@
-/********** Colors **********/
-
-.purple {
-    background-color: rgb(181, 166, 212);
-}
-.purple::hover {
-    background-color: rgb(218,211,233);
-}
-
-.btn-purple {
-    color: white;
-    background-color: rgb(181, 166, 212);
-    border-color: rgb(181, 166, 212);
-}
-
-.btn-purple:hover{
-    color: white;
-    background-color: rgb(142,125,192);
-    border-color: rgb(142,125,192);
-}
+/******************** UNIVERSAL ELEMENTS ********************/
 
 .btn-xl {
     padding: 0.8rem 1.6rem;
@@ -26,17 +7,152 @@
     border-radius: 0.5rem;
     margin: auto;
 }
+.progress {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    border-radius: 0px;
+    z-index: 100;
+}
+hr {
+    margin: 1rem 0 1.25rem 0;
+}
 
-/********** Font Styling **********/
+/******************** QUIZ ELEMENTS ********************/
+
+#quiz-nav {
+    margin-top: 1rem;
+}
+.quiz-pose img {
+    max-height: 120px;
+    max-width: 100%;
+    margin: auto;
+}
+.quiz-label {
+    text-align: center;
+    display: inline-block;
+    padding: .4rem .75rem;
+    border-radius: 0.5rem;
+    border: 2px solid rgb(181, 166, 212);
+    margin-right: 10px;
+    margin-top: 0.5rem;
+    background-color: white;
+    z-index: 2;
+}
+.quiz-label:hover {
+    background-color: rgb(217,210,232);
+}
+.quiz-label.locked:hover {
+    background-color: white;
+}
+.quiz-label.dropped {
+    margin: 0;
+    width: 100%;
+    top: 0; 
+    left: 0;
+}
+.quiz-label.correct {
+    border: 2px solid #28a745;
+}
+.quiz-label.incorrect {
+    border: 2px solid #DC3553;
+}
+.quiz-label-drop {
+    background-color: whitesmoke;
+    border-radius: 0.5rem;
+    border: 2px solid whitesmoke;
+    height: calc(2.5rem + 4px);
+    width: 100%;
+    margin-bottom: 0.25rem;
+}
+.quiz-label-drop.incorrect {
+    border: 2px solid #DC3553;
+}
+.quiz-img-drag {
+    max-width: 100%;
+    padding: .5rem .5rem;
+    border-radius: 0.5rem;
+    border: 2px solid rgb(181, 166, 212);
+    aspect-ratio: 1;
+}
+.quiz-img-drag img {
+    max-width: 100%;
+    margin: auto;
+}
+.quiz-img-drag.correct {
+    border: 2px solid #28a745;
+}
+.quiz-img-drag.incorrect {
+    border: 2px solid #DC3553;
+}
+.quiz-img-drop {
+    aspect-ratio: 1;
+    background-color: whitesmoke;
+    border-radius: 0.5rem;
+    font-size: 1.25rem;
+}
+.quiz-img-drop.incorrect {
+    border: 2px solid #DC3553;
+}
+.quiz-img-drop.ui-draggable-active p {
+    display: inline;
+}
+.quiz-img-drop.taken p {
+    display: none;
+}
+.align-middle {
+    position: relative;
+    top: 50%;
+    transform: translateY(calc(-50%));
+}
+#matching-options {
+    min-height: 3rem;
+}
+#ordering-row {
+    padding: 0 0%;
+}
+#ordering-options {
+    min-height: 3rem;
+    padding: 0 5%;
+}
+.ui-draggable {
+    cursor: move;
+}
+.ui-draggable-dragging {
+    z-index: 10;
+}
+.ui-droppable-hover  {
+    background-color: rgb(228, 228, 228);
+}
+
+
+/******************** COLORS ********************/
+
+.bg-purple {
+    background-color: rgb(181, 166, 212);
+}
+.bg-light-purple {
+    background-color: rgb(217,210,232);
+}
+.btn-purple {
+    color: white;
+    background-color: rgb(181, 166, 212);
+    border-color: rgb(181, 166, 212);
+}
+.btn-purple:hover{
+    color: white;
+    background-color: rgb(142,125,192);
+    border-color: rgb(142,125,192);
+}
+
+/******************** FONTS & TEXT ********************/
 
 body {
     font-family: 'Lato', sans-serif;
 }
-
-.text-center {
-    text-align: center;
+.nav-link {
+    font-size: 1.25rem;
 }
-
 .title {
     font-family: 'Playfair Display', serif;
     font-weight: bold;
@@ -44,7 +160,14 @@ body {
     text-align: center;
     color: rgb(181, 166, 212);
 }
-
-.nav-link {
-    font-size: 1.25rem;
+.quiz-heading {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 20pt;
+    color: rgb(181, 166, 212);
+    margin-bottom: 0.25rem;
+}
+.quiz-question {
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
 }

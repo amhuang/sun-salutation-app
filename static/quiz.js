@@ -1,0 +1,417 @@
+let POSE_IMG_DIR = "/static/img/poses/"
+
+$(document).ready(function(){
+    displayProgress()
+    bindPrevBtn()
+    console.log(data)
+    
+    if (data["type"] == "matching") {
+        if (data["user_data"] == "") {
+            loadMatching()
+        } else {
+            loadMatchingResponse(data["user_data"])
+        }
+    } 
+    else if (data["type"] == "ordering") {
+        if (data["user_data"] == "") {
+            loadOrdering()
+        } else {
+            loadOrderingResponse(data["user_data"])
+        }
+    }
+    else if (data["type"] == "muscles") {
+        loadMuscleId()
+    } 
+    else {
+        showResults()
+    }
+
+})
+
+/********************** QUIZ-WIDE UTILITIES **********************/
+
+// Displays current progress in the progress bar
+function displayProgress() {
+    prog = $(".progress-bar")
+    if (data["id"]) {
+        percent = (data["id"] / data["len"]) * 100 + ""  
+    } else {
+        percent = 100
+    }
+    prog.attr("aria-valuenow", percent)
+    prog.css("width", percent + "%")
+} 
+
+// Binds bottom right button to next question
+function bindNextBtn () {
+    $("#next-btn").html("Next")
+    $("#next-btn").click(function () {
+        if (data["id"] < data["len"]) {
+            //console.log("redirecting to", "/quiz/" + (data["id"] + 1))
+            window.location.href = "/quiz/" + (data["id"] + 1)
+        }
+        else if (data["id"] == data["len"]) {
+            window.location.href = "/quiz_result"
+        }
+    })
+}
+
+// Binds bottom left button to prev question
+function bindPrevBtn() {
+    // Add previous button if not the first question
+    if (1 < data["id"]) {
+        prevBtn = $("<button id='prev-btn' class='btn btn-purple float-start'>").html("Previous")
+        prevBtn.click(function() {
+            window.location.href = "/quiz/" + (data["id"] - 1)
+        })
+        $("#quiz-nav").append(prevBtn)
+    }
+    else if (typeof data["id"] == "undefined") {
+        prevBtn = $("<button id='prev-btn' class='btn btn-purple float-start'>").html("Previous")
+        prevBtn.click(function() {
+            window.location.href = "/quiz/" + (data["prev"])
+        })
+        $("#quiz-nav").append(prevBtn)
+    }
+}
+
+// Shuffles an array at random
+function shuffle(array) {
+    arr = array.slice(0)
+    let rand, i = arr.length 
+    while (i != 0) {    // While there remain elements to shuffle.
+        // Pick a remaining element, swap with the current element.
+        rand = Math.floor(Math.random() * i)
+        i--
+        [arr[i], arr[rand]] = [arr[rand], arr[i]]
+    }
+    return arr
+}
+
+// Sends an array of answers to save for question <id>
+function saveAnswers(type, score, responses, correct, unused) {
+    userData = {
+        "id": data["id"],
+        "type": type,
+        "score": score,
+        "responses": responses,
+        "correct": correct,
+        "unused": unused,
+    }
+    console.log("sending", userData)
+    $.ajax({
+        type: "POST",
+        url: "" + data["id"],                
+        dataType : "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(userData),
+        success: function(result){
+            let response = result["data"]["user_data"]
+            if (data["type"] == "matching") {
+                loadMatchingResponse(response)
+            }
+            else if (data["type"] == "ordering") {
+                loadOrderingResponse(response)
+            }
+
+        },
+        error: function(request, status, error){
+            console.log("Error");
+            console.log(request)
+            console.log(status)
+            console.log(error)
+        }
+    });
+}
+
+// Updates cumulative responses and correct arrays accordingly, returns score
+function checkAnswer(response, answer, correct, responses) {
+    if (typeof response == "undefined") {
+        response = ""
+    } 
+    responses.push(response)
+
+    if (response == answer) {
+        correct.push(true)
+        return 1
+    } else {
+        correct.push(false)
+        return 0
+    }
+    
+}
+
+/********************** MATCHING QUESTIONS **********************/
+
+// Matching question: displays unanswered questions
+function loadMatching() {
+    // Display header, images, and answer bank
+    $("#content").empty()
+    showMatchingQ("Part 1: Matching")
+    shuffled = shuffle(data["answers"])
+    showMatchingOpts(shuffled)
+
+    // Event binding
+    $("#next-btn").html("Check")
+    $("#next-btn").click(function() {
+        checkMatching()
+    })
+    $(".quiz-label").draggable({  revert: "invalid" })
+    $(".quiz-label-drop").droppable({
+        accept: function(ui) {
+            return $(this).children().length == 0
+        },
+        drop: function(event, ui) {
+            let dropped = ui.draggable
+            $(dropped).addClass("dropped")
+            $(dropped).detach().css({top: 0,left: 0}).appendTo($(this));
+        }
+    })
+    $("#matching-options").droppable({
+        drop: function(event, ui) {
+            let dropped = ui.draggable
+            $(dropped).removeClass("dropped")
+            $(dropped).detach().css({top: 0,left: 0}).appendTo($(this));
+        }
+    })
+}
+
+// Matching question: Loads data from previous response
+function loadMatchingResponse(data) {
+    // Display header, pose images
+    $("#content").empty()
+    let msg = "Part 1: Matching"
+    showMatchingQ(msg)
+    
+    // Display right/wrong feedback
+    let usedAnswers = []
+    $(".quiz-label-drop").each(function(i) {
+        response = data["responses"][i]
+        let label = $("<div class='quiz-label'>").html(response)
+        
+        if (response == "") {               // Blank response (cont loop)
+            $(this).addClass("incorrect")
+            return
+        } else if (data["correct"][i]) {    // Answer is correct
+            label.addClass("dropped correct")
+        } else {                            // Answer incorrect
+            label.addClass("dropped incorrect")
+        }
+        $(this).append(label)
+        usedAnswers.push(response)
+    })
+
+    // Show unused answers in answer bank and next button
+    console.log("unused", data["unused"])
+    showMatchingOpts(data["unused"])
+    $(".quiz-label").addClass("locked")
+    bindNextBtn()
+}
+
+// Matching question: Checks answers, saves data on user's response
+function checkMatching() {
+    let score = 0
+    let responses = []
+    let correct = []
+
+    // Score and collect responses and answers
+    $('.quiz-label-drop').each(function(i) {
+        let response = ($(this).children().html())
+        let answer = data["answers"][i]
+        score += checkAnswer(response, answer, correct, responses)
+    })
+    let unusedLabels = $('.quiz-label').filter(':not(.dropped)')
+    console.log
+    let unused = []
+    unusedLabels.each( function(i, label) {
+        unused.push(label.innerHTML) 
+    })
+
+    saveAnswers("matching", score, responses, correct, unused)
+}
+
+// Msatching question: Displays header, images, and empty answer boxes
+function showMatchingQ(msg) {
+    let c = $("#content")
+    let header = $("<div class='quiz-heading'>").html(msg)
+    let question =  $("<div class='quiz-question'>").html(data["question"])
+    
+    let row = $("<div class='row gy-2'>")
+    for (let i = 0; i < 8; i++) {
+        filepath = data['imgs'][i]
+
+        let col = $("<div class='col-md-3 quiz-pose'>")
+        let img = $("<img />").attr({src: filepath, class: "mx-auto d-block"})
+        let label = $("<div class='quiz-label-drop'>")
+        col.append(label, img)
+        row.append(col)
+    }
+    c.append(header, question, row)
+    c.append($("<hr>"))
+}
+
+// Matching question: Shows answer bank with posnames for options
+function showMatchingOpts(options) {
+    console.log("opptions", options)
+    let c = $("#content")
+    let row = $("<div class='row'>")
+    let col = $("<div id='matching-options' class='col-md'>")
+    options.forEach((name) => {
+        let label = $("<div class='quiz-label'>").html(name)
+        col.append(label)
+    })
+    c.append(row.append(col))
+}
+
+/********************** ORDERING QUESTIONS **********************/
+
+// Ordering: Displays an ordering question and options
+function loadOrdering() {
+    $("#content").empty()
+    showOrderingQ()
+    shuffledOpts = shuffle(data["answers"])
+    showOrderingOpts(shuffledOpts)
+
+    // Event binding
+    $("#next-btn").html("Check")
+    $("#next-btn").click(function() {
+        checkOrdering()
+    })
+
+    $(".quiz-img-drag").parent().draggable({  revert: "invalid" })
+    $(".quiz-img-drop").droppable({
+        drop: function(event, ui) {
+            let dropped = ui.draggable
+            $(dropped).removeClass("col-md-2")
+            $(dropped).detach().css({top: 0,left: 0}).appendTo($(this))
+            $(this).addClass("taken")
+        }
+    })
+    $("#ordering-options").droppable({
+        drop: function(event, ui) {
+            let dropped = ui.draggable
+            $(dropped).addClass("col-md-2")
+            $(dropped).parent().removeClass("taken")
+            $(dropped).detach().css({top: 0,left: 0}).appendTo($(this))
+        }
+    })
+}
+
+function loadOrderingResponse(data) {
+    // Display header, pose images
+    $("#content").empty()
+    if (data["id"] == 2) {
+        msg = "Part 2: Ordering"
+        
+    } else if (data["id"] == 3) {
+        msg = "Part 2: Drag the poses in order for moves 7-12 of a sun salutation"
+    }
+    showOrderingQ(msg)
+    
+    // Display right/wrong feedback
+    let usedAnswers = []
+    $(".quiz-img-drop").each(function(i) {
+        response = data["responses"][i]
+        if (response == "") {               // Blank response (cont loop)
+            $(this).addClass("incorrect")
+            return
+        }
+
+        let imgDrag = $("<div class='quiz-img-drag'>")
+        filepath = POSE_IMG_DIR + response + ".jpeg"
+        let img = $("<img />").attr({src: filepath, class: "mx-auto d-block"})
+        imgDrag.append(img)
+
+        if (data["correct"][i]) {    // Answer is correct
+            imgDrag.addClass("correct")
+        } else {                            // Answer incorrect
+            imgDrag.addClass("incorrect")
+        }
+        $(this).addClass("taken")
+        $(this).append(imgDrag)
+        usedAnswers.push(response)
+    })
+
+    // Show unused answers in answer bank and next button
+    showOrderingOpts(data["unused"])
+    bindNextBtn()
+}
+
+// Ordering: checks answers and saves user data
+function checkOrdering() {
+    let score = 0
+    let responses = []
+    let correct = []
+
+    // Score and collect responses and answers
+    $('.quiz-img-drop').each(function(i) {
+        let response = ($(this).find("img").data("name"))
+        let answer = data["answers"][i]
+        score += checkAnswer(response, answer, correct, responses)
+    })
+    let unused = data["answers"].filter(ans => !responses.includes(ans)) 
+    saveAnswers("ordering", score, responses, correct, unused)
+}
+
+// Ordering: Displays the question part
+function showOrderingQ() {
+    if (data["id"] == 2) {
+        shift = 1
+    } else if (data["id"] == 3) {
+        shift = 7
+    }
+    
+    let c = $("#content")
+    let header = $("<div class='quiz-heading'>").html("Part 2: Ordering")
+    let question = $("<div class='quiz-question'>").html(data["question"])
+    let row = $("<div class='row gx-3'>")
+    
+    for (let i = 0; i < 6; i++) {
+        let col = $("<div class='col-md-2'>")
+        let imgDrop = $("<div class='quiz-img-drop'>")
+        imgDrop.append($("<p class='align-middle text-center'>").html(i + shift + ""))
+        col.append(imgDrop)
+        row.append(col)
+    }
+    c.append(header, question, row, $("<hr>"))
+}
+
+// Ordering: Shows answer options. <options> is an array of pose names
+function showOrderingOpts(options) {
+    let c = $("#content")
+    let row = $("<div class='row gx-3' id='ordering-options'>")
+
+    options.forEach(function(posename, i) {
+        let col = $("<div class='col-md-2'>")
+        let imgDrag = $("<div class='quiz-img-drag'>")
+        filepath = POSE_IMG_DIR + posename + ".jpeg"
+        
+        let img = $("<img />").attr({src: filepath, class: "mx-auto d-block"})
+        img.data("name", posename)
+        imgDrag.append(img)
+        col.append(imgDrag)
+        row.append(col)
+    })
+    c.append(row)
+}
+
+/********************** MUSCLE ID QUESTIONS **********************/
+
+// Displays an identifying muscles activated by poses question
+function loadMuscleId() {
+    c = $("#content")
+    header = $("<div class='quiz-heading'>").html("Part 2: Muscles Activated")
+    question = $("<div>").html("Drag the name to the diagram.")
+    c.append(header,question)
+}
+
+/********************** DISPLAY QUIZ RESULTS **********************/
+
+function showResults() {
+    c = $("#content")
+    matching = "Matching score: " + data["matching_score"] + "/" + data["matching_total"]
+    ordering = "Ordering score: " + data["ordering_score"] + "/" + data["ordering_total"]
+    
+    c.append($("<p>").html(matching))
+    c.append($("<p>").html(ordering))
+}

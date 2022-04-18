@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 
 {% block content %}
-Learn
+<script>
+    var data = {{ data|tojson }}
+</script>
+<script src="/static/learn.js"></script>
+<div class="container" id="content">
+
 {% endblock %}

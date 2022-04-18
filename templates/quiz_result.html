@@ -4,21 +4,23 @@
 
 <script>
     var data = {{ data|tojson }}
+    console.log(data)
 </script>
 
 <script src="/static/quiz.js"></script>
 
 <div class="container" id="content">
-    
-</div>
-<div class="container">
-    <div class="row">
-        <div id="quiz-nav" class="col-md">
-            <button type='button' id="next-btn" class='btn btn-purple float-end'>Check</button>
-        </div>
+    <div class="quiz-heading">
+        Quiz Results
     </div>
 </div>
 
+<div class="container">
+    <div class="row">
+        <div id="quiz-nav" class="col-md">
+        </div>
+    </div>
+</div>
 
 <div class="progress bg-light-purple">
     <div class="progress-bar bg-purple" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
