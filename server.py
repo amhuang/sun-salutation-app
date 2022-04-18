@@ -10,8 +10,7 @@ app = Flask(__name__)
 
 # Quiz data
 quiz_responses = {}
-QUIZ_LEN = 11
-TOTAL_POINTS = 8 + 12
+QUIZ_LEN = 3
 
 @app.route('/')
 def home():
@@ -73,6 +72,26 @@ def get_quiz_data(id):
     }
     return data
 
+@app.route('/quiz_result', methods = ['GET'])
+def quiz_results():
+    matching_score = 0
+    ordering_score = 0
+    for key in quiz_responses:
+        val = quiz_responses[key]
+        if val["type"] == "matching":
+            matching_score += val["score"]
+        elif val["type"] == "ordering":
+            ordering_score += val["score"]
+        
+    data = {
+        "prev": QUIZ_LEN,
+        "matching_score": matching_score,
+        "matching_total": 8,
+        "ordering_score": ordering_score,
+        "ordering_total": 12,
+    }
+    return render_template('quiz_result.html', data=data)
+
 '''
 QUIZ_QUESTIONS = {
     1: {
@@ -84,7 +103,6 @@ QUIZ_QUESTIONS = {
         "user_data": quiz_responses[id] if id in quiz_responses else "",
     }
 }
-
 '''
 
 if __name__ == '__main__':
