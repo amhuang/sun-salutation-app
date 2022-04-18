@@ -1,7 +1,6 @@
 let POSE_IMG_DIR = "/static/img/poses/"
 
 $(document).ready(function(){
-    $("#content").empty()
     displayProgress()
     bindPrevBtn()
     console.log(data)
@@ -23,6 +22,9 @@ $(document).ready(function(){
     else if (data["type"] == "muscles") {
         loadMuscleId()
     } 
+    else {
+        showResults()
+    }
 
 })
 
@@ -31,7 +33,11 @@ $(document).ready(function(){
 // Displays current progress in the progress bar
 function displayProgress() {
     prog = $(".progress-bar")
-    let percent = (data["id"] / data["len"]) * 100 + ""
+    if (data["id"]) {
+        percent = (data["id"] / data["len"]) * 100 + ""  
+    } else {
+        percent = 100
+    }
     prog.attr("aria-valuenow", percent)
     prog.css("width", percent + "%")
 } 
@@ -44,6 +50,9 @@ function bindNextBtn () {
             //console.log("redirecting to", "/quiz/" + (data["id"] + 1))
             window.location.href = "/quiz/" + (data["id"] + 1)
         }
+        else if (data["id"] == data["len"]) {
+            window.location.href = "/quiz_result"
+        }
     })
 }
 
@@ -54,6 +63,13 @@ function bindPrevBtn() {
         prevBtn = $("<button id='prev-btn' class='btn btn-purple float-start'>").html("Previous")
         prevBtn.click(function() {
             window.location.href = "/quiz/" + (data["id"] - 1)
+        })
+        $("#quiz-nav").append(prevBtn)
+    }
+    else if (typeof data["id"] == "undefined") {
+        prevBtn = $("<button id='prev-btn' class='btn btn-purple float-start'>").html("Previous")
+        prevBtn.click(function() {
+            window.location.href = "/quiz/" + (data["prev"])
         })
         $("#quiz-nav").append(prevBtn)
     }
@@ -130,6 +146,7 @@ function checkAnswer(response, answer, correct, responses) {
 // Matching question: displays unanswered questions
 function loadMatching() {
     // Display header, images, and answer bank
+    $("#content").empty()
     showMatchingQ("Part 1: Matching")
     shuffled = shuffle(data["answers"])
     showMatchingOpts(shuffled)
@@ -250,7 +267,7 @@ function showMatchingOpts(options) {
 
 // Ordering: Displays an ordering question and options
 function loadOrdering() {
-    
+    $("#content").empty()
     showOrderingQ()
     shuffledOpts = shuffle(data["answers"])
     showOrderingOpts(shuffledOpts)
@@ -386,4 +403,15 @@ function loadMuscleId() {
     header = $("<div class='quiz-heading'>").html("Part 2: Muscles Activated")
     question = $("<div>").html("Drag the name to the diagram.")
     c.append(header,question)
+}
+
+/********************** DISPLAY QUIZ RESULTS **********************/
+
+function showResults() {
+    c = $("#content")
+    matching = "Matching score: " + data["matching_score"] + "/" + data["matching_total"]
+    ordering = "Ordering score: " + data["ordering_score"] + "/" + data["ordering_total"]
+    
+    c.append($("<p>").html(matching))
+    c.append($("<p>").html(ordering))
 }
