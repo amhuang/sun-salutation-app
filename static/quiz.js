@@ -12,15 +12,17 @@ $(document).ready(function(){
         } else {
             loadMatchingResponse(data["user_data"])
         }
-    } else if (data["type"] == "muscles") {
-        loadMuscleId()
-    } else if (data["type"] == "ordering") {
+    } 
+    else if (data["type"] == "ordering") {
         if (data["user_data"] == "") {
             loadOrdering()
         } else {
             loadOrderingResponse(data["user_data"])
         }
     }
+    else if (data["type"] == "muscles") {
+        loadMuscleId()
+    } 
 
 })
 
@@ -39,6 +41,7 @@ function bindNextBtn () {
     $("#next-btn").html("Next")
     $("#next-btn").click(function () {
         if (data["id"] < data["len"]) {
+            //console.log("redirecting to", "/quiz/" + (data["id"] + 1))
             window.location.href = "/quiz/" + (data["id"] + 1)
         }
     })
@@ -70,14 +73,16 @@ function shuffle(array) {
 }
 
 // Sends an array of answers to save for question <id>
-function saveAnswers(score, responses, correct, unused) {
+function saveAnswers(type, score, responses, correct, unused) {
     userData = {
         "id": data["id"],
+        "type": type,
         "score": score,
         "responses": responses,
         "correct": correct,
         "unused": unused,
     }
+    console.log("sending", userData)
     $.ajax({
         type: "POST",
         url: "" + data["id"],                
@@ -86,10 +91,10 @@ function saveAnswers(score, responses, correct, unused) {
         data: JSON.stringify(userData),
         success: function(result){
             let response = result["data"]["user_data"]
-            if (data["id"] == 1) {
+            if (data["type"] == "matching") {
                 loadMatchingResponse(response)
             }
-            else if (data["id"] == 2 || data["id"] == 3) {
+            else if (data["type"] == "ordering") {
                 loadOrderingResponse(response)
             }
 
@@ -103,13 +108,29 @@ function saveAnswers(score, responses, correct, unused) {
     });
 }
 
+// Updates cumulative responses and correct arrays accordingly, returns score
+function checkAnswer(response, answer, correct, responses) {
+    if (typeof response == "undefined") {
+        response = ""
+    } 
+    responses.push(response)
+
+    if (response == answer) {
+        correct.push(true)
+        return 1
+    } else {
+        correct.push(false)
+        return 0
+    }
+    
+}
+
 /********************** MATCHING QUESTIONS **********************/
 
 // Matching question: displays unanswered questions
 function loadMatching() {
     // Display header, images, and answer bank
-    let msg = "Part 1: Match the name to the pose"
-    showMatchingGraphics(2, 4, msg, labels=true)
+    showMatchingQ("Part 1: Matching")
     shuffled = shuffle(data["answers"])
     showMatchingOpts(shuffled)
 
@@ -142,8 +163,8 @@ function loadMatching() {
 function loadMatchingResponse(data) {
     // Display header, pose images
     $("#content").empty()
-    let msg = "Part 1: Match the name to the pose"
-    showMatchingGraphics(2, 4, msg, labels=true)
+    let msg = "Part 1: Matching"
+    showMatchingQ(msg)
     
     // Display right/wrong feedback
     let usedAnswers = []
@@ -164,6 +185,7 @@ function loadMatchingResponse(data) {
     })
 
     // Show unused answers in answer bank and next button
+    console.log("unused", data["unused"])
     showMatchingOpts(data["unused"])
     $(".quiz-label").addClass("locked")
     bindNextBtn()
@@ -171,7 +193,6 @@ function loadMatchingResponse(data) {
 
 // Matching question: Checks answers, saves data on user's response
 function checkMatching() {
-    // check responses, send answers and score to server
     let score = 0
     let responses = []
     let correct = []
@@ -180,54 +201,41 @@ function checkMatching() {
     $('.quiz-label-drop').each(function(i) {
         let response = ($(this).children().html())
         let answer = data["answers"][i]
-
-        if (response == answer) {
-            score += 1
-            correct.push(true)
-        } else if (typeof response == "undefined") {
-            correct.push(false)
-            response = ""
-        } else {
-            correct.push(false)
-        }
-        responses.push(response)
+        score += checkAnswer(response, answer, correct, responses)
     })
-
-    // Get unused options
     let unusedLabels = $('.quiz-label').filter(':not(.dropped)')
+    console.log
     let unused = []
     unusedLabels.each( function(i, label) {
         unused.push(label.innerHTML) 
     })
 
-    saveAnswers(score, responses, correct, unused)
+    saveAnswers("matching", score, responses, correct, unused)
 }
 
 // Msatching question: Displays header, images, and empty answer boxes
-function showMatchingGraphics(rows, cols, msg, labels=false) {
+function showMatchingQ(msg) {
     let c = $("#content")
     let header = $("<div class='quiz-heading'>").html(msg)
-    c.append(header)
+    let question =  $("<div class='quiz-question'>").html(data["question"])
     
-    let row = $("<div class='row gy-3'>")
-    for (let i = 0; i < rows*cols; i++) {
+    let row = $("<div class='row gy-2'>")
+    for (let i = 0; i < 8; i++) {
         filepath = data['imgs'][i]
 
         let col = $("<div class='col-md-3 quiz-pose'>")
         let img = $("<img />").attr({src: filepath, class: "mx-auto d-block"})
-        if (labels) {
-            let label = $("<div class='quiz-label-drop'>")
-            col.append(label)
-        }
-        col.append(img)
+        let label = $("<div class='quiz-label-drop'>")
+        col.append(label, img)
         row.append(col)
     }
-    c.append(row)
+    c.append(header, question, row)
     c.append($("<hr>"))
 }
 
 // Matching question: Shows answer bank with posnames for options
 function showMatchingOpts(options) {
+    console.log("opptions", options)
     let c = $("#content")
     let row = $("<div class='row'>")
     let col = $("<div id='matching-options' class='col-md'>")
@@ -240,10 +248,10 @@ function showMatchingOpts(options) {
 
 /********************** ORDERING QUESTIONS **********************/
 
-// Displays an ordering question
+// Ordering: Displays an ordering question and options
 function loadOrdering() {
     
-    showOrderingGraphics()
+    showOrderingQ()
     shuffledOpts = shuffle(data["answers"])
     showOrderingOpts(shuffledOpts)
 
@@ -258,7 +266,7 @@ function loadOrdering() {
         drop: function(event, ui) {
             let dropped = ui.draggable
             $(dropped).removeClass("col-md-2")
-            $(dropped).detach().css({top: 0,left: 0}).appendTo($(this));
+            $(dropped).detach().css({top: 0,left: 0}).appendTo($(this))
             $(this).addClass("taken")
         }
     })
@@ -267,7 +275,7 @@ function loadOrdering() {
             let dropped = ui.draggable
             $(dropped).addClass("col-md-2")
             $(dropped).parent().removeClass("taken")
-            $(dropped).detach().css({top: 0,left: 0}).appendTo($(this));
+            $(dropped).detach().css({top: 0,left: 0}).appendTo($(this))
         }
     })
 }
@@ -276,12 +284,12 @@ function loadOrderingResponse(data) {
     // Display header, pose images
     $("#content").empty()
     if (data["id"] == 2) {
-        msg = "Part 2: Drag the poses in order for moves 1-6 of a sun salutation"
+        msg = "Part 2: Ordering"
         
     } else if (data["id"] == 3) {
         msg = "Part 2: Drag the poses in order for moves 7-12 of a sun salutation"
     }
-    showOrderingGraphics(msg)
+    showOrderingQ(msg)
     
     // Display right/wrong feedback
     let usedAnswers = []
@@ -312,9 +320,8 @@ function loadOrderingResponse(data) {
     bindNextBtn()
 }
 
-// Ordering Question: checks answers and saves user data
+// Ordering: checks answers and saves user data
 function checkOrdering() {
-    // check responses, send answers and score to server
     let score = 0
     let responses = []
     let correct = []
@@ -323,35 +330,25 @@ function checkOrdering() {
     $('.quiz-img-drop').each(function(i) {
         let response = ($(this).find("img").data("name"))
         let answer = data["answers"][i]
-
-        if (response == answer) {
-            score += 1
-            correct.push(true)
-        } else if (typeof response == "undefined") {
-            correct.push(false)
-            response = ""
-        } else {
-            correct.push(false)
-        }
-        responses.push(response)
+        score += checkAnswer(response, answer, correct, responses)
     })
-    
-    let unused = data["answers"].filter(ans => !responses.includes(ans))
-    saveAnswers(score, responses, correct, unused)
+    let unused = data["answers"].filter(ans => !responses.includes(ans)) 
+    saveAnswers("ordering", score, responses, correct, unused)
 }
 
-function showOrderingGraphics() {
+// Ordering: Displays the question part
+function showOrderingQ() {
     if (data["id"] == 2) {
-        msg = "Part 2: Drag the poses in order for moves 1-6 of a sun salutation"
         shift = 1
     } else if (data["id"] == 3) {
-        msg = "Part 2: Drag the poses in order for moves 7-12 of a sun salutation"
         shift = 7
     }
     
     let c = $("#content")
-    let header = $("<div class='quiz-heading'>").html(msg)
+    let header = $("<div class='quiz-heading'>").html("Part 2: Ordering")
+    let question = $("<div class='quiz-question'>").html(data["question"])
     let row = $("<div class='row gx-3'>")
+    
     for (let i = 0; i < 6; i++) {
         let col = $("<div class='col-md-2'>")
         let imgDrop = $("<div class='quiz-img-drop'>")
@@ -359,10 +356,10 @@ function showOrderingGraphics() {
         col.append(imgDrop)
         row.append(col)
     }
-    c.append(header, row, $("<hr>"))
+    c.append(header, question, row, $("<hr>"))
 }
 
-// options is an array of img filepaths
+// Ordering: Shows answer options. <options> is an array of pose names
 function showOrderingOpts(options) {
     let c = $("#content")
     let row = $("<div class='row gx-3' id='ordering-options'>")

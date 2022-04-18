@@ -14,9 +14,15 @@
     border-radius: 0px;
     z-index: 100;
 }
+hr {
+    margin: 1rem 0 1.25rem 0;
+}
 
 /******************** QUIZ ELEMENTS ********************/
 
+#quiz-nav {
+    margin-top: 1rem;
+}
 .quiz-pose img {
     max-height: 120px;
     max-width: 100%;
@@ -28,9 +34,8 @@
     padding: .4rem .75rem;
     border-radius: 0.5rem;
     border: 2px solid rgb(181, 166, 212);
-    margin-top: 0.4rem;
-    margin-bottom: 0.4rem;
     margin-right: 10px;
+    margin-top: 0.5rem;
     background-color: white;
     z-index: 2;
 }
@@ -69,8 +74,6 @@
     border-radius: 0.5rem;
     border: 2px solid rgb(181, 166, 212);
     aspect-ratio: 1;
-    top: 0; 
-    left: 0;
 }
 .quiz-img-drag img {
     max-width: 100%;
@@ -101,9 +104,6 @@
     position: relative;
     top: 50%;
     transform: translateY(calc(-50%));
-}
-hr {
-    margin: 1.5rem 0;
 }
 #matching-options {
     min-height: 3rem;
@@ -165,8 +165,9 @@ body {
     font-weight: 700;
     font-size: 20pt;
     color: rgb(181, 166, 212);
-    margin-bottom: 1rem;
+    margin-bottom: 0.25rem;
 }
 .quiz-question {
-    font-size: 2rem;
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
 }
