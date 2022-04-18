@@ -8,9 +8,22 @@ import random
 
 app = Flask(__name__)
 
-<<<<<<< HEAD
+'''
+QUIZ_QUESTIONS = {
+    1: {
+        "id": 1,
+        "len": QUIZ_LEN,
+        "type": "matching",
+        "answers": ["Cobra", "Downward Facing Dog", "Eight Point Salute", "Equestrian (L)", "Half Forward Bend", "Plank", "Mountain Pose", "Raised Arm"],
+        "imgs": [],
+        "user_data": quiz_responses[id] if id in quiz_responses else "",
+    }
+}
+'''
+
 data = {
    "1": {
+      "id": "1",
       "Name": "Prayer Pose",
       "Muscles": ["Pelvis", "Legs"],
       "img": "/static/img/poses/mountain",
@@ -19,6 +32,7 @@ data = {
    },
 
    "2": {
+      "id": "2",
       "Name":"Raised Arm Pose",
       "Muscles": ["Hamstrings","Calves", "Spine", "Chest", "Shoulders"],
       "img": "/static/img/poses/raised",
@@ -27,6 +41,7 @@ data = {
    },
 
    "3": {
+      "id": "3",
       "Name": "Half Forward Bend",
       "Muscles": ["Hamstrings","Calves","Spine"],
       "img": "/static/img/poses/forward",
@@ -34,6 +49,7 @@ data = {
    },
 
    "4": {
+      "id": "4",
       "Name":"Equestrian Pose (L)",
       "Muscles": ["Calves", "Hamstrings", "Quadriceps", "Hip Flexors"],
       "img": "/static/img/poses/equestrianL",
@@ -41,6 +57,7 @@ data = {
    },
 
    "5": {
+      "id": "5",
       "Name": "Plank Pose",
       "Muscles": ["Abs", "Obliques", "Shoulders"],
       "img": "/static/img/poses/plank",
@@ -48,6 +65,7 @@ data = {
    },
 
    "6": {
+      "id": "6",
       "Name":"Eight Point Salute",
       "Muscles": ["Shoulders","Spine"],
       "img": "/static/img/poses/eight",
@@ -55,6 +73,7 @@ data = {
    },
 
    "7": {
+      "id": "7",
       "Name":"Cobra Pose",
       "Muscles": ["Lower Back", "Lats","Lower Traps"],
       "img": "/static/img/poses/cobra",
@@ -62,6 +81,7 @@ data = {
    },
 
    "8": {
+      "id": "8",
       "Name":"Downward Facing Dog",
       "Muscles":["Claves", "Hamstrings","Lats", "Spine"],
       "img": "/static/img/poses/downward",
@@ -69,6 +89,7 @@ data = {
    },
 
    "9": {
+      "id": "9",
       "Name":"Equestrian Pose (R)",
       "Muscles": ["Calves", "Hamstrings","Quadriceps","Hip Flexors"],
       "img": "/static/img/poses/equestrianR",
@@ -76,6 +97,7 @@ data = {
    },
 
    "10": {
+      "id": "10",
       "Name":"Half Forward Bend",
       "Muscles":["Hamstrings", "Calves", "Spine"],
       "img": "/static/img/poses/forward",
@@ -83,6 +105,7 @@ data = {
    },
 
    "11": {
+      "id": "11",
       "Name":"Raised Arm Pose",
       "Muscles": ["Hamstrings","Calves", "Spine", "Chest", "Shoulders"],
       "img": "/static/img/poses/raised",
@@ -90,6 +113,7 @@ data = {
    },
 
    "12": {
+      "id": "12",
       "Name":"Mountain Pose",
       "Muscles": ["Pelvis", "Legs"],
       "img": "/static/img/poses/prayer",
@@ -97,41 +121,20 @@ data = {
    }
 }
 
-scores = {
-   "pose":"0",
-   "matching":"0",
-   "order":"0"
-}
-=======
 # Quiz data
 quiz_responses = {}
 QUIZ_LEN = 3
->>>>>>> main
 
 @app.route('/')
 def home():
     return render_template('home.html')
 
-<<<<<<< HEAD
 @app.route('/learn/<id>')
 def learn(id=None):
-   return render_template('learn.html')
-
-@app.route('/quiz/<id>')
-def quiz(id=None):
-   return render_template('quiz.html', data = data)
-
-@app.route('/quiz/results')
-def quiz():
-   return render_template('quiz_results', scores = scores )
-=======
-@app.route('/learn/')
-def learn():
     global learn
     id = int(id)
     data = get_learn_data(id)
     return render_template('learn.html')
-
 
 @app.route('/quiz/<id>', methods = ['POST', 'GET'])
 def quiz(id=None):
@@ -204,21 +207,6 @@ def quiz_results():
         "ordering_total": 12,
     }
     return render_template('quiz_result.html', data=data)
-
-'''
-QUIZ_QUESTIONS = {
-    1: {
-        "id": 1,
-        "len": QUIZ_LEN,
-        "type": "matching",
-        "answers": ["Cobra", "Downward Facing Dog", "Eight Point Salute", "Equestrian (L)", "Half Forward Bend", "Plank", "Mountain Pose", "Raised Arm"],
-        "imgs": [],
-        "user_data": quiz_responses[id] if id in quiz_responses else "",
-    }
-}
-'''
-
->>>>>>> main
 
 if __name__ == '__main__':
    app.run(debug = True)
