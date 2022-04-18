@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    updateDate()
     displayProgress()
     bindNextBtn()
     bindPrevBtn()
@@ -7,12 +8,33 @@ $(document).ready(function(){
 
 len = 11
 
-// Displays current progress in the progress bar
+function updateDate(){
+  userData = {
+      "id": d["id"],
+      "Date": Date()
+  }
+  $.ajax({
+      type: "POST",
+      url: "/update_time",
+      dataType : "json",
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify(userData),
+      success: function(result){
+        console.log("Success");
+      },
+      error: function(request, status, error){
+          console.log("Error");
+          console.log(request)
+          console.log(status)
+          console.log(error)
+      }
+  });
+}
+
 function displayProgress() {
     prog = $(".progress-bar")
     if (d["id"]) {
         percent = (d["id"] / (len+1)) * 100
-        console.log(percent);
     } else {
         percent = 100
     }
