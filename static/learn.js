@@ -1,0 +1,75 @@
+$(document).ready(function(){
+    displayProgress()
+    bindNextBtn()
+    bindPrevBtn()
+    loadInfo()
+})
+
+len = 11
+
+// Displays current progress in the progress bar
+function displayProgress() {
+    prog = $(".progress-bar")
+    if (d["id"]) {
+        percent = (d["id"] / (len+1)) * 100
+        console.log(percent);
+    } else {
+        percent = 100
+    }
+    prog.attr("aria-valuenow", percent)
+    prog.css("width", percent + "%")
+}
+
+function loadInfo() {
+    $("#content").empty()
+    let c = $("#content")
+    let header = $("<div class='quiz-heading'>").html(d["Name"])
+    c.append(header)
+
+    let row = $("<div class='row '>")
+    let pcol = $("<div class='col-md-6'>")
+    let filepath = d['gif'] +".gif"
+    let img = $("<img />").attr({src: filepath, width:'100%'})
+    pcol.append(img)
+    row.append(pcol)
+
+    let col = $("<div class='col-md-6'>")
+    let desc_title = $("<div class=description-title >").html("Directions:")
+    col.append(desc_title)
+    let muscles_title = $("<div class=description-title >").html("Muscles:")
+    col.append(muscles_title)
+    d["Muscles"].forEach(function(m){
+      let muscle = $("<div class='quiz-question bullets'>").html("        -" + m)
+      col.append(muscle)
+    })
+    row.append(col)
+    c.append(row)
+    // let subname = $("<div class='quiz-question'>").html(d["Name"])
+    // c.append($("<hr>"))
+}
+
+function bindNextBtn () {
+    $("#next-btn").html("Next")
+    $("#next-btn").click(function () {
+        if (d["id"] < len) {
+            //console.log("redirecting to", "/quiz/" + (data["id"] + 1))
+            num = parseInt(d["id"]) +1
+            window.location.href = "/learn/" + (num)
+        }
+        else if (d["id"] == len) {
+            window.location.href = "/learn_order"
+        }
+    })
+}
+
+function bindPrevBtn() {
+    // Add previous button if not the first question
+    if (1 < d["id"]) {
+        prevBtn = $("<button id='prev-btn' class='btn btn-purple float-start'>").html("Previous")
+        prevBtn.click(function() {
+            num = parseInt(d["id"]) -1
+            window.location.href = "/learn/" + (num)
+        })
+        $("#quiz-nav").append(prevBtn)
+    }
+}

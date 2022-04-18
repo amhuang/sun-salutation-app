@@ -48,7 +48,7 @@ hr {
 .quiz-label.dropped {
     margin: 0;
     width: 100%;
-    top: 0; 
+    top: 0;
     left: 0;
 }
 .quiz-label.correct {
@@ -170,4 +170,15 @@ body {
 .quiz-question {
     font-size: 1rem;
     margin-bottom: 1.25rem;
+}
+
+.description-title {
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem;
+    font-weight: bold;
+}
+
+.bullets {
+    padding-left: 20px;
+    margin-bottom:1px;
 }

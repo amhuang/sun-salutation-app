@@ -132,9 +132,12 @@ def home():
 @app.route('/learn/<id>')
 def learn(id=None):
     global learn
-    id = int(id)
-    data = get_learn_data(id)
-    return render_template('learn.html')
+    d = data[id]
+    return render_template('learn.html', d = d)
+
+@app.route('/learn_order')
+def learn_order():
+    return render_template('learn_order.html')
 
 @app.route('/quiz/<id>', methods = ['POST', 'GET'])
 def quiz(id=None):
@@ -151,33 +154,33 @@ def quiz(id=None):
         data = get_quiz_data(id)
         print("update ddata","\n",  data)
         return jsonify(data=data)
-        
+
 def get_quiz_data(id):
     # Pose name matching question
     if id == 1:
         type = "matching"
         question = "Match the name to the pose."
         answers = ["Cobra", "Downward Facing Dog", "Eight Point Salute", "Equestrian (L)", "Half Forward Bend", "Plank", "Mountain Pose", "Raised Arm"]
-        img_paths = ["/static/img/poses/" + pose + ".jpeg" for pose in answers]   
+        img_paths = ["/static/img/poses/" + pose + ".jpeg" for pose in answers]
 
     # Sun salutation order question
     elif id == 2:
-        type = "ordering" 
+        type = "ordering"
         question = "Drag the poses in order for moves 1-6 of a sun salutation"
         answers = ["Prayer Pose", "Raised Arm", "Half Forward Bend", "Equestrian (L)", "Plank", "Eight Point Salute"]
-        img_paths = ["/static/img/poses/" + pose + ".jpeg" for pose in answers]   
+        img_paths = ["/static/img/poses/" + pose + ".jpeg" for pose in answers]
 
     elif id == 3:
-        type = "ordering" 
+        type = "ordering"
         question = "Drag the poses in order for moves 7-12 of a sun salutation"
         answers = ["Cobra", "Downward Facing Dog", "Equestrian (R)", "Half Forward Bend", "Raised Arm", "Mountain Pose"]
-        img_paths = ["/static/img/poses/" + pose + ".jpeg" for pose in answers]   
+        img_paths = ["/static/img/poses/" + pose + ".jpeg" for pose in answers]
 
     # Muscles used in a pose question
     elif 4 <= id and id < 12:
         type = "muscles"
 
-    data = { 
+    data = {
         "id": id,
         "len": QUIZ_LEN,
         "type": type,
@@ -198,7 +201,7 @@ def quiz_results():
             matching_score += val["score"]
         elif val["type"] == "ordering":
             ordering_score += val["score"]
-        
+
     data = {
         "prev": QUIZ_LEN,
         "matching_score": matching_score,
