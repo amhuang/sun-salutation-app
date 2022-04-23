@@ -161,45 +161,93 @@ quiz_data = {
         "user_data": "",
     },
 
+
     4: {
         "id": 4,
         "len": QUIZ_LEN,
         "type": "muscle",
-        "question": "Which poses work the hip muscle?",
-        "answer": ["Equestrian (R)"],
-        "imgs": ["/static/img/poses/Cobra.jpeg", "/static/img/poses/Downward Facing Dog.jpeg", "/static/img/poses/Equestrian (R).jpeg", "/static/img/poses/Raised Arm.jpeg"],
-        "user_data":"",
+        "question": "Select the muscles activated in raised arm pose.",
+        "answers": ["Hamstrings","Calves", "Spine", "Chest", "Shoulders"],
+        "imgs": ["/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/calves.svg","/static/img/muscles/indiv/spine.svg","/static/img/muscles/indiv/blank.svg", "/static/img/muscles/indiv/shoulders.svg"],
+        "user_data": "",
     },
 
-    5: {
+        5: {
         "id": 5,
         "len": QUIZ_LEN,
         "type": "muscle",
-        "question": "Which poses work the spine?",
-        "answer": ["Downward Facing Dog", "Raised Arm"],
-        "imgs": ["/static/img/poses/Downward Facing Dog.jpeg", "/static/img/poses/Plank.jpeg", "/static/img/poses/Raised Arm.jpeg", "/static/img/poses/Equestrian (R).jpeg"],
-        "user_data":"",
+        "question": "Select the muscles activated in prayer pose.",
+        "answers": ["Pelvis", "Legs"],
+        "imgs": ["/static/img/muscles/indiv/blank.svg", "/static/img/muscles/indiv/blank.svg"],
+        "user_data": "",
     },
-
     6: {
         "id": 6,
         "len": QUIZ_LEN,
         "type": "muscle",
-        "question": "Which poses work the hamstrings?",
-        "answer": ["Half Foward Bend", "Raised Arm", "Downward Facing Dog", "Equestrian (R)"],
-        "imgs": ["/static/img/poses/Half Forward Bend.jpeg","/static/img/poses/Raised Arm.jpeg", "/static/img/poses/Downward Facing Dog.jpeg", "/static/img/poses/Equestrian (R).jpeg"],
-        "user_data":"",
-    }
+        "question": "Select the muscles activated in half forward bend pose.",
+        "answers": ["Hamstrings","Calves","Spine"],
+        "imgs": ["/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/calves.svg", "/static/img/muscles/indiv/spine.svg"],
+        "user_data": "",
+    },
+    7: {
+        "id": 7,
+        "len": QUIZ_LEN,
+        "type": "muscle",
+        "question": "Select the muscles activated in equestrian pose",
+        "answers": ["Calves", "Hamstrings", "Quadriceps", "Hip Flexors"],
+        "imgs": ["/static/img/muscles/indiv/calves.svg", "/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/quads.svg", "/static/img/muscles/indiv/blank.svg"],
+        "user_data": "",
+    },
+    8: {
+        "id": 8,
+        "len": QUIZ_LEN,
+        "type": "muscle",
+        "question": "Select the muscles activated in plank pose.",
+        "answers": ["Abs", "Obliques", "Shoulders"],
+        "imgs": ["/static/img/muscles/indiv/abs.svg", "/static/img/muscles/indiv/obliques.svg", "/static/img/muscles/indiv/shoulders.svg"],
+        "user_data": "",
+    },
 
-    # 4: {
-    #     "id": 4,
-    #     "len": QUIZ_LEN,
-    #     "type": "muscle",
-    #     "question": "Select the muscles activated in raised arm pose.",
-    #     "answers": ["Hamstrings","Calves", "Spine", "Chest", "Shoulders"],
-    #     "imgs": ["/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/calves.svg","/static/img/muscles/indiv/spine.svg","/static/img/muscles/indiv/blank.svg", "/static/img/muscles/indiv/shoulders.svg"],
-    #     "user_data": "",
-    # },
+    9: {
+        "id": 9,
+        "len": QUIZ_LEN,
+        "type": "muscle",
+        "question": "Select the muscles activated in eight point salute.",
+        "answers": ["Shoulders","Spine"],
+        "imgs": ["/static/img/muscles/indiv/shoulders.svg", "/static/img/muscles/indiv/spine.svg"],
+        "user_data": "",
+    },
+
+    10: {
+        "id": 10,
+        "len": QUIZ_LEN,
+        "type": "muscle",
+        "question": "Select the muscles activated in cobra pose.",
+        "answers": ["Lower Back", "Lats","Lower Traps"],
+        "imgs": ["/static/img/muscles/indiv/lower-back.svg", "/static/img/muscles/indiv/lats.svg", "/static/img/muscles/indiv/lower-traps.svg"],
+        "user_data": "",
+    },
+
+    11: {
+        "id": 11,
+        "len": QUIZ_LEN,
+        "type": "muscle",
+        "question": "Select the muscles activated in downward facing dog.",
+        "answers": ["Claves", "Hamstrings","Lats", "Spine"],
+        "imgs": ["/static/img/muscles/indiv/calves.svg", "/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/lats.svg", "/static/img/muscles/indiv/spine.svg"],
+        "user_data": "",
+    },
+
+    12: {
+        "id": 12,
+        "len": QUIZ_LEN,
+        "type": "muscle",
+        "question": "Select the muscles activated in mountain pose.",
+        "answers": ["Pelvis", "Legs"],
+        "imgs": ["/static/img/muscles/indiv/blank.svg", "/static/img/muscles/indiv/blank.svg"],
+        "user_data": "",
+    },
 }
 quiz_responses={}
 
