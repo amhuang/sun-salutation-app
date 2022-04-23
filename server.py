@@ -146,7 +146,7 @@ quiz_data = {
         "id": 2,
         "len": QUIZ_LEN,
         "type": "ordering",
-        "question": "Match the name to the pose.",
+        "question": "Drag the poses in order for moves 1-6 of a sun salutation.",
         "answers": ["Prayer Pose", "Raised Arm", "Half Forward Bend", "Equestrian (L)", "Plank", "Eight Point Salute"],
         "imgs": ["/static/img/poses/Prayer Pose.jpeg", "/static/img/poses/Raised Arm.jpeg", "/static/img/poses/Half Forward Bend.jpeg", "/static/img/poses/Equestrian (L).jpeg", "/static/img/poses/Plank.jpeg", "/static/img/poses/Eight Point Salute.jpeg"],
         "user_data": "",
@@ -155,12 +155,11 @@ quiz_data = {
         "id": 3,
         "len": QUIZ_LEN,
         "type": "ordering",
-        "question": "Match the name to the pose.",
+        "question": "Drag the poses in order for moves 7-12 of a sun salutation.",
         "answers": ["Cobra", "Downward Facing Dog", "Equestrian (R)", "Half Forward Bend", "Raised Arm", "Mountain Pose"],
         "imgs": ["/static/img/poses/Cobra.jpeg", "/static/img/poses/Downward Facing Dog.jpeg", "/static/img/poses/Equestrian (R).jpeg", "/static/img/poses/Half Forward Bend.jpeg", "/static/img/poses/Raised Arm.jpeg", "/static/img/poses/Mountain Pose.jpeg"],
         "user_data": "",
     },
-
 
     4: {
         "id": 4,
@@ -172,7 +171,7 @@ quiz_data = {
         "user_data": "",
     },
 
-        5: {
+    5: {
         "id": 5,
         "len": QUIZ_LEN,
         "type": "muscle",
@@ -181,6 +180,7 @@ quiz_data = {
         "imgs": ["/static/img/muscles/indiv/blank.svg", "/static/img/muscles/indiv/blank.svg"],
         "user_data": "",
     },
+
     6: {
         "id": 6,
         "len": QUIZ_LEN,
@@ -190,6 +190,7 @@ quiz_data = {
         "imgs": ["/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/calves.svg", "/static/img/muscles/indiv/spine.svg"],
         "user_data": "",
     },
+
     7: {
         "id": 7,
         "len": QUIZ_LEN,
@@ -199,6 +200,7 @@ quiz_data = {
         "imgs": ["/static/img/muscles/indiv/calves.svg", "/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/quads.svg", "/static/img/muscles/indiv/blank.svg"],
         "user_data": "",
     },
+    
     8: {
         "id": 8,
         "len": QUIZ_LEN,
@@ -278,32 +280,40 @@ def update_time():
 
 @app.route('/quiz/<id>', methods = ['POST', 'GET'])
 def quiz(id=None):
-    global quiz_responses
     id = int(id)
+
     if request.method == 'GET':
-        data = quiz_data[id] #get_quiz_data(id)
-        print("getting data","\n", data)
+        data = quiz_data[id]
+        print("getting page for", id)
         return render_template('quiz.html', data=data)
+
     else:
         answer = request.get_json()
-        print("answer", "\n", answer)
         quiz_data[id]["user_data"] = answer
-        #quiz_responses[id] = answer
-        print("quiz_responses","\n",  quiz_data[id]["user_data"])
-        data = quiz_data[id] # get_quiz_data(id)
-        print("update data","\n",  data)
+        print("quiz_responses for", id)
+
+        # Update
+        data = quiz_data[id] 
+        print("update data for id", id)
         return jsonify(data=data)
 
 @app.route('/quiz_result', methods = ['GET'])
 def quiz_results():
     matching_score = 0
     ordering_score = 0
-    for key in quiz_responses:
-        val = quiz_responses[key]
-        if val["type"] == "matching":
-            matching_score += val["score"]
-        elif val["type"] == "ordering":
-            ordering_score += val["score"]
+    for key in quiz_data:
+        question = quiz_data[key]
+        type = question["type"]
+        response = question["user_data"]
+
+        # Unanswered question
+        if response == "":
+            return render_template('quiz.html', data=data)
+       
+        elif type == "matching":
+            matching_score += response["score"]
+        elif type == "ordering":
+            ordering_score += response["score"]
 
     quiz_results = {
         "prev": QUIZ_LEN,
