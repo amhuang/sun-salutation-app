@@ -25,10 +25,12 @@ function showResults() {
         return
     }
 
-    matching = "Matching score: " + data["matching_score"] + "/" + data["matching_total"]
-    ordering = "Ordering score: " + data["ordering_score"] + "/" + data["ordering_total"]
+    matching = "Matching Score: " + data["matching_score"] + "/" + data["matching_total"]
+    ordering = "Ordering Score: " + data["ordering_score"] + "/" + data["ordering_total"]
+    muscle = "Muscle Identification Score: " + data["muscle_score"] + "/" + data["muscle_total"]
     
     c.append($("<p>").html(matching))
     c.append($("<p>").html(ordering))
+    c.append($("<p>").html(muscle))
     bindPrevBtn()
 }

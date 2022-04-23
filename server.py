@@ -131,14 +131,17 @@ learn_data = {
 }
 
 # Quiz data
-QUIZ_LEN = 4
+QUIZ_LEN = 10
+with open("./static/img/muscles/labeled.svg", "r") as f:
+    MUSCLE_SVG = f.read()
+
 quiz_data = {
     1: {
         "id": 1,
         "len": QUIZ_LEN,
         "type": "matching",
         "question": "Match the name to the pose.",
-        "answers": ["Cobra", "Downward Facing Dog", "Eight Point Salute", "Equestrian (L)", "Half Forward Bend", "Plank", "Mountain Pose", "Raised Arm"],
+        "answers": ["Cobra", "Downward Facing Dog", "Eight Point Salute", "Equestrian", "Half Forward Bend", "Plank", "Mountain Pose", "Raised Arm"],
         "imgs": ["/static/img/poses/Cobra.jpeg", "/static/img/poses/Downward Facing Dog.jpeg", "/static/img/poses/Eight Point Salute.jpeg", "/static/img/poses/Equestrian (L).jpeg", "/static/img/poses/Half Forward Bend.jpeg", "/static/img/poses/Plank.jpeg", "/static/img/poses/Mountain Pose.jpeg", "/static/img/poses/Raised Arm.jpeg"],
         "user_data": "",
     },
@@ -165,9 +168,8 @@ quiz_data = {
         "len": QUIZ_LEN,
         "type": "muscle",
         "question": "Select the muscles activated in raised arm pose.",
-        "answers": ["Hamstrings","Calves", "Spine", "Chest", "Shoulders"],
-        "imgs": ["/static/img/muscles/indiv/blank.svg"],
-        #"imgs": ["/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/calves.svg","/static/img/muscles/indiv/spine.svg","/static/img/muscles/indiv/blank.svg", "/static/img/muscles/indiv/shoulders.svg"],
+        "answers": ["Calves","Chest","Hamstrings","Shoulders","Spine"],
+        "imgs": [MUSCLE_SVG, "/static/img/poses/Raised Arm.jpeg"],
         "user_data": "",
     },
     5: {
@@ -176,7 +178,7 @@ quiz_data = {
         "type": "muscle",
         "question": "Select the muscles activated in half forward bend pose.",
         "answers": ["Hamstrings","Calves","Spine"],
-        "imgs": ["/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/calves.svg", "/static/img/muscles/indiv/spine.svg"],
+        "imgs": [MUSCLE_SVG],
         "user_data": "",
     },
     6: {
@@ -185,7 +187,7 @@ quiz_data = {
         "type": "muscle",
         "question": "Select the muscles activated in equestrian pose",
         "answers": ["Calves", "Hamstrings", "Quadriceps", "Hip Flexors"],
-        "imgs": ["/static/img/muscles/indiv/calves.svg", "/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/quads.svg", "/static/img/muscles/indiv/blank.svg"],
+        "imgs": [MUSCLE_SVG],
         "user_data": "",
     },
     7: {
@@ -194,7 +196,7 @@ quiz_data = {
         "type": "muscle",
         "question": "Select the muscles activated in plank pose.",
         "answers": ["Abs", "Obliques", "Shoulders"],
-        "imgs": ["/static/img/muscles/indiv/abs.svg", "/static/img/muscles/indiv/obliques.svg", "/static/img/muscles/indiv/shoulders.svg"],
+        "imgs": [MUSCLE_SVG],
         "user_data": "",
     },
     8: {
@@ -203,7 +205,7 @@ quiz_data = {
         "type": "muscle",
         "question": "Select the muscles activated in eight point salute.",
         "answers": ["Shoulders","Spine"],
-        "imgs": ["/static/img/muscles/indiv/shoulders.svg", "/static/img/muscles/indiv/spine.svg"],
+        "imgs": [MUSCLE_SVG],
         "user_data": "",
     },
     9: {
@@ -212,7 +214,7 @@ quiz_data = {
         "type": "muscle",
         "question": "Select the muscles activated in cobra pose.",
         "answers": ["Lower Back", "Lats","Lower Traps"],
-        "imgs": ["/static/img/muscles/indiv/lower-back.svg", "/static/img/muscles/indiv/lats.svg", "/static/img/muscles/indiv/lower-traps.svg"],
+        "imgs": [MUSCLE_SVG],
         "user_data": "",
     },
     10: {
@@ -221,7 +223,7 @@ quiz_data = {
         "type": "muscle",
         "question": "Select the muscles activated in downward facing dog.",
         "answers": ["Claves", "Hamstrings","Lats", "Spine"],
-        "imgs": ["/static/img/muscles/indiv/calves.svg", "/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/lats.svg", "/static/img/muscles/indiv/spine.svg"],
+        "imgs": [MUSCLE_SVG],
         "user_data": "",
     }
 }
@@ -265,21 +267,21 @@ def quiz(id=None):
         quiz_data[id]["user_data"] = answer
         print("quiz_responses for", id)
 
-        # Update
         data = quiz_data[id] 
-        print("update data for id", id)
+        print(quiz_data[id]["user_data"]["score"])
         return jsonify(data=data)
 
 @app.route('/quiz_result', methods = ['GET'])
 def quiz_results():
     matching_score = 0
     ordering_score = 0
+    muscle_score = 0
+
     score_data = {
         "prev": QUIZ_LEN,
-        "matching_score": matching_score,
         "matching_total": 8,
-        "ordering_score": ordering_score,
         "ordering_total": 12,
+        "muscle_total": 7,
         "incomplete": 0     # the earliest incomplete question, if there is one
     }
 
@@ -287,6 +289,7 @@ def quiz_results():
         question = quiz_data[key]
         type = question["type"]
         response = question["user_data"]
+        print(response)
 
         if response == "":
             score_data["incomplete"] = key
@@ -296,6 +299,14 @@ def quiz_results():
             matching_score += response["score"]
         elif type == "ordering":
             ordering_score += response["score"]
+        elif type == "muscle":
+            muscle_score += response["score"]
+
+    score_data.update({
+        "matching_score": matching_score,
+        "ordering_score": ordering_score,
+        "muscle_score": muscle_score 
+    })
 
     return render_template('quiz_result.html', data=score_data)
 

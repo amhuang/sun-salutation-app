@@ -18,7 +18,11 @@ $(document).ready(function(){
         }
     }
     else if (data["type"] == "muscle") {
-        MuscleId.load()
+        if (data["user_data"] == "") {
+            MuscleId.load()
+        } else {
+            MuscleId.loadResponse(data["user_data"])
+        }
     } 
 })
 
@@ -54,20 +58,22 @@ function bindNextBtn () {
 
 // Binds bottom left button to prev question
 function bindPrevBtn() {
-    // Add previous button if not the first question
-    if (1 < data["id"]) {
-        prevBtn = $("<button id='prev-btn' class='btn btn-purple float-start'>").html("Previous")
-        prevBtn.click(function() {
+    let btn = $("#prev-btn")
+    if (data["id"] == 1) {
+        btn.hide()
+        return
+    }
+
+    btn.show()
+    if (data["id"] > 1) {
+        btn.click(function() {
             window.location.href = "/quiz/" + (data["id"] - 1)
         })
-        $("#quiz-nav").append(prevBtn)
     }
     else if (typeof data["id"] == "undefined") {
-        prevBtn = $("<button id='prev-btn' class='btn btn-purple float-start'>").html("Previous")
-        prevBtn.click(function() {
+        btn.click(function() {
             window.location.href = "/quiz/" + (data["prev"])
         })
-        $("#quiz-nav").append(prevBtn)
     }
 }
 
@@ -109,7 +115,9 @@ function saveAnswers(type, score, responses, correct, unused) {
             else if (data["type"] == "ordering") {
                 Ordering.loadResponse(response)
             }
-
+            else if (data["type"] == "muscle") {
+                MuscleId.loadResponse(response)
+            }
         },
         error: function(request, status, error){
             console.log("Error");
@@ -277,9 +285,7 @@ var Ordering = function() {
 
         // Event binding
         $("#next-btn").html("Check")
-        $("#next-btn").click(function() {
-            check()
-        })
+        $("#next-btn").click(function() { check() })
 
         $(".quiz-img-drag").parent().draggable({  revert: "invalid" })
         $(".quiz-img-drop").droppable({
@@ -308,7 +314,6 @@ var Ordering = function() {
         showQuestion()
         
         // Display right/wrong feedback
-        let usedAnswers = []
         $(".quiz-img-drop").each(function(i) {
             response = data["responses"][i]
             if (response == "") {               // Blank response (cont loop)
@@ -329,7 +334,6 @@ var Ordering = function() {
             }
             $(this).addClass("taken")
             $(this).append(imgDrag)
-            usedAnswers.push(response)
         })
 
         // Show unused answers in answer bank and next button
@@ -364,7 +368,7 @@ var Ordering = function() {
         let c = $("#content")
         let header = $("<div class='quiz-heading'>").html("Part 2: Ordering")
         let question = $("<div class='quiz-question'>").html(data["question"])
-        let row = $("<div class='row gx-3'>")
+        let row = $("<div class='row gx-3' id='ordering-responses'>")
 
         // How much to shift 0 based index for display on drop boxes
         if (data["id"] == 2)        { shift = 1 } 
@@ -397,7 +401,7 @@ var Ordering = function() {
             col.append(imgDrag)
             row.append(col)
         })
-        c.append(row)
+        c.append(row, $("<br>"))
     }
 
     return {
@@ -410,25 +414,75 @@ var Ordering = function() {
 
 var MuscleId = function () {
     // Displays an identifying muscles activated by poses question
+    var options = ["abs", "calves", "hamstrings", "lats", "lower-back", "lower-traps", "obliques", "quads", "shoulders", "spine"]
+    var selected = []
+    
     function load() {
+        $("#content").empty()
+        showQuestion()
+        animateMuscles()
+        animateLabel()
+
+        // Event binding
+        $("#next-btn").html("Check")
+        $("#next-btn").click(function() { check() })
+    }
+
+    function loadResponse(data) {
+        // Display header, pose images
         let c = $("#content")
         c.empty()
         showQuestion()
-        showOptions(data["options"])
+        
+        
+        animateLabel()
+        console.log(data)
+        
+        // Display right/wrong feedback for the user's selected muscles
+        data["responses"].forEach((muscle, i) => {
+            let muscleClass = "." + muscle.toLowerCase().replace(" ", "-")
+            if (data["correct"][i]) {
+                $(muscleClass).addClass("selected")
+            }
+            else {
+                $(muscleClass).addClass("incorrect")
+            }
+        })
+        data["unused"].forEach((muscle, i) => {
+            let muscleClass = "." + muscle.toLowerCase().replace(" ", "-")
+            $(muscleClass).addClass("missed")
+        })
+        bindNextBtn()
+
+        /*let row = c.find(".row")
+        let feedback = $("<div class='col-md-4'>")
+        let correct = $("<div id='correct'>").html("<p><b> Correctly Chosen Muscles</b></p>")
+        let incorrect = $("<div id='incorrect'>").html("<b>Incorrectly Chosen Muscles</b>")
+        let missed = $("<div id='missed'>").html("<b>Missed Muscles</b>")
+        feedback.append(correct, missed, incorrect)
+        row.append(feedback)*/
     }
-    function loadResponse() {
-        return
-    }
+
     function showQuestion() {
         let c = $("#content")
-        let header = $("<div class='quiz-heading'>").html("Part 2: Ordering")
-        let question = $("<div class='quiz-question'>").html(data["question"])
-        //let row = $("<div class='row gx-3'>")
-        c.append(header, question, $("<hr>"))
+        let header = $("<div class='quiz-heading'>").html("Part 3: Muscle Identification")
+        let hint = "\nHint: " + data["answers"].length + " muscles should be selected."
+        let question = $("<div class='quiz-question'>").html(data["question"] + hint)
+        
+        let pose = $("<div class='col-md-3'>")
+        let img = $("<img />").attr({src: data["imgs"][1], class: "muscle-side-pose"})
+        pose.append(img)
+
+        let diagram = $("<div class='col-md'>").html( data["imgs"][0])  // adds SVG image
+        let label = $("<div class='muscle-label'>").hide()
+        diagram.append(label)
+        
+        let row = $("<div class='row gx-3'>")
+        row.append(pose, diagram)
+        c.append(header, question, row)
+
     }
-    function showOptions(options) {
-        console.log("options", options)        
-        let c = $("#content")
+    /*function showOptions(options) {
         let row = $("<div class='row'>")
         let col = $("<div class='col-md'>")
         options.forEach((muscle) => {
@@ -436,9 +490,73 @@ var MuscleId = function () {
             col.append(label)
         })
         c.append(row.append(col))
+    }*/
+
+    // Adds animation to muscle diagram SVG. options and selected are class-wide variables
+    function animateLabel() {
+        let label = $('.muscle-label')
+        options.forEach( (muscle) => {
+            let muscleClass = "." + muscle
+            $(muscleClass).hover(function() {
+                // add floating label
+                t = this.getBoundingClientRect().top - 20
+                l = this.getBoundingClientRect().left - 100
+                label.css({"top": t + "px", "left": l + "px"}).show()
+                label.html($(this).data("name"))
+            }, function() {
+                label.hide()
+            })
+        })
     }
+
+    function animateMuscles() {
+        options.forEach( (muscle) => {
+            let muscleClass = "." + muscle
+
+            $(muscleClass).hover(function() {
+                // shade entire class purple
+                $(muscleClass).addClass("hover")
+            }, function() {
+                $(muscleClass).removeClass("hover")
+            })
+            
+            $(muscleClass).click(function() {
+                let muscle = $(this).data("name")
+                let i = selected.indexOf(muscle)
+                if (i == -1) {
+                    $(muscleClass).addClass("selected")
+                    selected.push(muscle)
+                }
+                else {
+                    $(muscleClass).removeClass("selected")
+                    selected.splice(i, 1)
+                }
+                console.log(selected)
+            })
+        })
+    }
+
     function check() {
-        return
+        selected.sort()
+        data["answers"].sort()
+
+        // Evaluate selected answers
+        let correct = []
+        let score = 0
+        let total = data["answers"].length
+        selected.forEach((response, i) => {
+            if (data["answers"].includes(response)) {
+                correct.push(true)
+                score += 1
+            }
+            else {
+                correct.push(false)
+            }
+        })
+
+        // missed = the correct muscles that were unselected
+        let missed = data["answers"].filter(ans => !selected.includes(ans)) 
+        saveAnswers("muscle", score/total, selected, correct, missed)
     }
     
     return {
