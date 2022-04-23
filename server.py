@@ -8,7 +8,7 @@ import random
 
 app = Flask(__name__)
 
-data = {
+learn_data = {
    "1": {
       "id": "1",
       "Name": "Prayer Pose",
@@ -131,7 +131,7 @@ data = {
 }
 
 # Quiz data
-QUIZ_LEN = 3
+QUIZ_LEN = 4
 quiz_data = {
     1: {
         "id": 1,
@@ -160,29 +160,18 @@ quiz_data = {
         "imgs": ["/static/img/poses/Cobra.jpeg", "/static/img/poses/Downward Facing Dog.jpeg", "/static/img/poses/Equestrian (R).jpeg", "/static/img/poses/Half Forward Bend.jpeg", "/static/img/poses/Raised Arm.jpeg", "/static/img/poses/Mountain Pose.jpeg"],
         "user_data": "",
     },
-
     4: {
         "id": 4,
         "len": QUIZ_LEN,
         "type": "muscle",
         "question": "Select the muscles activated in raised arm pose.",
         "answers": ["Hamstrings","Calves", "Spine", "Chest", "Shoulders"],
-        "imgs": ["/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/calves.svg","/static/img/muscles/indiv/spine.svg","/static/img/muscles/indiv/blank.svg", "/static/img/muscles/indiv/shoulders.svg"],
+        "imgs": ["/static/img/muscles/indiv/blank.svg"],
+        #"imgs": ["/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/calves.svg","/static/img/muscles/indiv/spine.svg","/static/img/muscles/indiv/blank.svg", "/static/img/muscles/indiv/shoulders.svg"],
         "user_data": "",
     },
-
     5: {
         "id": 5,
-        "len": QUIZ_LEN,
-        "type": "muscle",
-        "question": "Select the muscles activated in prayer pose.",
-        "answers": ["Pelvis", "Legs"],
-        "imgs": ["/static/img/muscles/indiv/blank.svg", "/static/img/muscles/indiv/blank.svg"],
-        "user_data": "",
-    },
-
-    6: {
-        "id": 6,
         "len": QUIZ_LEN,
         "type": "muscle",
         "question": "Select the muscles activated in half forward bend pose.",
@@ -190,9 +179,8 @@ quiz_data = {
         "imgs": ["/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/calves.svg", "/static/img/muscles/indiv/spine.svg"],
         "user_data": "",
     },
-
-    7: {
-        "id": 7,
+    6: {
+        "id": 6,
         "len": QUIZ_LEN,
         "type": "muscle",
         "question": "Select the muscles activated in equestrian pose",
@@ -200,9 +188,8 @@ quiz_data = {
         "imgs": ["/static/img/muscles/indiv/calves.svg", "/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/quads.svg", "/static/img/muscles/indiv/blank.svg"],
         "user_data": "",
     },
-    
-    8: {
-        "id": 8,
+    7: {
+        "id": 7,
         "len": QUIZ_LEN,
         "type": "muscle",
         "question": "Select the muscles activated in plank pose.",
@@ -210,9 +197,8 @@ quiz_data = {
         "imgs": ["/static/img/muscles/indiv/abs.svg", "/static/img/muscles/indiv/obliques.svg", "/static/img/muscles/indiv/shoulders.svg"],
         "user_data": "",
     },
-
-    9: {
-        "id": 9,
+    8: {
+        "id": 8,
         "len": QUIZ_LEN,
         "type": "muscle",
         "question": "Select the muscles activated in eight point salute.",
@@ -220,9 +206,8 @@ quiz_data = {
         "imgs": ["/static/img/muscles/indiv/shoulders.svg", "/static/img/muscles/indiv/spine.svg"],
         "user_data": "",
     },
-
-    10: {
-        "id": 10,
+    9: {
+        "id": 9,
         "len": QUIZ_LEN,
         "type": "muscle",
         "question": "Select the muscles activated in cobra pose.",
@@ -230,28 +215,16 @@ quiz_data = {
         "imgs": ["/static/img/muscles/indiv/lower-back.svg", "/static/img/muscles/indiv/lats.svg", "/static/img/muscles/indiv/lower-traps.svg"],
         "user_data": "",
     },
-
-    11: {
-        "id": 11,
+    10: {
+        "id": 10,
         "len": QUIZ_LEN,
         "type": "muscle",
         "question": "Select the muscles activated in downward facing dog.",
         "answers": ["Claves", "Hamstrings","Lats", "Spine"],
         "imgs": ["/static/img/muscles/indiv/calves.svg", "/static/img/muscles/indiv/hamstrings.svg", "/static/img/muscles/indiv/lats.svg", "/static/img/muscles/indiv/spine.svg"],
         "user_data": "",
-    },
-
-    12: {
-        "id": 12,
-        "len": QUIZ_LEN,
-        "type": "muscle",
-        "question": "Select the muscles activated in mountain pose.",
-        "answers": ["Pelvis", "Legs"],
-        "imgs": ["/static/img/muscles/indiv/blank.svg", "/static/img/muscles/indiv/blank.svg"],
-        "user_data": "",
-    },
+    }
 }
-quiz_responses={}
 
 @app.route('/')
 def home():
@@ -260,7 +233,7 @@ def home():
 @app.route('/learn/<id>')
 def learn(id=None):
     global learn
-    d = data[id]
+    d = learn_data[id]
     return render_template('learn.html', d = d)
 
 @app.route('/learn_order')
@@ -273,10 +246,10 @@ def update_time():
     current_id = json_data["id"]
     current_date = json_data["Date"]
 
-    data[current_id]["Date"] = current_date
-    print(data[current_id])
+    learn_data[current_id]["Date"] = current_date
+    print(learn_data[current_id])
 
-    return jsonify(data=data)
+    return jsonify(data=learn_data)
 
 @app.route('/quiz/<id>', methods = ['POST', 'GET'])
 def quiz(id=None):
@@ -301,28 +274,30 @@ def quiz(id=None):
 def quiz_results():
     matching_score = 0
     ordering_score = 0
-    for key in quiz_data:
-        question = quiz_data[key]
-        type = question["type"]
-        response = question["user_data"]
-
-        # Unanswered question
-        if response == "":
-            return render_template('quiz.html', data=data)
-       
-        elif type == "matching":
-            matching_score += response["score"]
-        elif type == "ordering":
-            ordering_score += response["score"]
-
-    quiz_results = {
+    score_data = {
         "prev": QUIZ_LEN,
         "matching_score": matching_score,
         "matching_total": 8,
         "ordering_score": ordering_score,
         "ordering_total": 12,
+        "incomplete": 0     # the earliest incomplete question, if there is one
     }
-    return render_template('quiz_result.html', data=quiz_results)
+
+    for key in quiz_data:
+        question = quiz_data[key]
+        type = question["type"]
+        response = question["user_data"]
+
+        if response == "":
+            score_data["incomplete"] = key
+            return render_template('quiz_result.html', data=score_data)
+       
+        if type == "matching":
+            matching_score += response["score"]
+        elif type == "ordering":
+            ordering_score += response["score"]
+
+    return render_template('quiz_result.html', data=score_data)
 
 if __name__ == '__main__':
    app.run(debug = True)

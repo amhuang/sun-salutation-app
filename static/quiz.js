@@ -20,20 +20,15 @@ $(document).ready(function(){
     else if (data["type"] == "muscle") {
         MuscleId.load()
     } 
-    else {
-        showResults()
-    }
-
 })
 
 /********************** QUIZ-WIDE UTILITIES **********************/
-let POSE_IMG_DIR = "/static/img/poses/"
 
 // Displays current progress in the progress bar
 function displayProgress() {
     prog = $(".progress-bar")
     if (data["id"]) {
-        percent = (data["id"] / data["len"]) * 100 + ""  
+        percent = (data["id"] / (data["len"] + 1)) * 100 + ""  
     } else {
         percent = 100
     }
@@ -145,6 +140,8 @@ function scoreAnswer(response, answer, correct, responses) {
 /********************** MATCHING QUESTIONS **********************/
 
 var Matching = function() {
+    var IMG_DIR = "/static/img/poses/"
+
     // Matching question: displays unanswered questions
     function load() {
 
@@ -229,9 +226,9 @@ var Matching = function() {
     }
 
     // Msatching: Displays header, images, and empty answer boxes
-    function showQuestion(msg) {
+    function showQuestion() {
         let c = $("#content")
-        let header = $("<div class='quiz-heading'>").html(msg)
+        let header = $("<div class='quiz-heading'>").html("Part 1: Matching")
         let question =  $("<div class='quiz-question'>").html(data["question"])
         let row = $("<div class='row gy-2'>")
 
@@ -271,6 +268,7 @@ var Matching = function() {
 
 // Ordering: Displays an ordering question and options
 var Ordering = function() {
+    var IMG_DIR = "/static/img/poses/"
 
     function load() {
         $("#content").empty()
@@ -288,6 +286,8 @@ var Ordering = function() {
             drop: function(event, ui) {
                 let dropped = ui.draggable
                 $(dropped).removeClass("col-md-2")
+                $(dropped).addClass("dropped")
+
                 $(dropped).detach().css({top: 0,left: 0}).appendTo($(this))
                 $(this).addClass("taken")
             }
@@ -317,8 +317,9 @@ var Ordering = function() {
             }
 
             let imgDrag = $("<div class='quiz-img-drag'>")
-            filepath = POSE_IMG_DIR + response + ".jpeg"
+            filepath = IMG_DIR + response + ".jpeg"
             let img = $("<img />").attr({src: filepath, class: "mx-auto d-block"})
+            img.data("name", response)
             imgDrag.append(img)
 
             if (data["correct"][i]) {    // Answer is correct
@@ -348,7 +349,12 @@ var Ordering = function() {
             let answer = data["answers"][i]
             score += scoreAnswer(response, answer, correct, responses)
         })
-        let unused = data["answers"].filter(ans => !responses.includes(ans)) 
+        let unused = [] // data["answers"].filter(ans => !responses.includes(ans))  
+        let unusedImgs = $('#ordering-options').find('img')
+        unusedImgs.each( function(i) {
+            unused.push($(this).data("name")) 
+        })
+        console.log(unused)
         saveAnswers("ordering", score, responses, correct, unused)
     }
 
@@ -383,7 +389,7 @@ var Ordering = function() {
         options.forEach(function(posename, i) {
             let col = $("<div class='col-md-2'>")
             let imgDrag = $("<div class='quiz-img-drag'>")
-            filepath = POSE_IMG_DIR + posename + ".jpeg"
+            filepath = IMG_DIR + posename + ".jpeg"
             
             let img = $("<img />").attr({src: filepath, class: "mx-auto d-block"})
             img.data("name", posename)
