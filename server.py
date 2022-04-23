@@ -178,7 +178,7 @@ quiz_data = {
         "type": "muscle",
         "question": "Select the muscles activated in half forward bend pose.",
         "answers": ["Hamstrings","Calves","Spine"],
-        "imgs": [MUSCLE_SVG],
+        "imgs": [MUSCLE_SVG, "/static/img/poses/Half Forward Bend.jpeg"],
         "user_data": "",
     },
     6: {
@@ -187,7 +187,7 @@ quiz_data = {
         "type": "muscle",
         "question": "Select the muscles activated in equestrian pose",
         "answers": ["Calves", "Hamstrings", "Quadriceps", "Hip Flexors"],
-        "imgs": [MUSCLE_SVG],
+        "imgs": [MUSCLE_SVG, "/static/img/poses/Equestrian (R).jpeg"],
         "user_data": "",
     },
     7: {
@@ -196,7 +196,7 @@ quiz_data = {
         "type": "muscle",
         "question": "Select the muscles activated in plank pose.",
         "answers": ["Abs", "Obliques", "Shoulders"],
-        "imgs": [MUSCLE_SVG],
+        "imgs": [MUSCLE_SVG, "/static/img/poses/Plank.jpeg"],
         "user_data": "",
     },
     8: {
@@ -205,7 +205,7 @@ quiz_data = {
         "type": "muscle",
         "question": "Select the muscles activated in eight point salute.",
         "answers": ["Shoulders","Spine"],
-        "imgs": [MUSCLE_SVG],
+        "imgs": [MUSCLE_SVG, "/static/img/poses/Eight Point Salute.jpeg"],
         "user_data": "",
     },
     9: {
@@ -214,7 +214,7 @@ quiz_data = {
         "type": "muscle",
         "question": "Select the muscles activated in cobra pose.",
         "answers": ["Lower Back", "Lats","Lower Traps"],
-        "imgs": [MUSCLE_SVG],
+        "imgs": [MUSCLE_SVG, "/static/img/poses/Cobra.jpeg"],
         "user_data": "",
     },
     10: {
@@ -223,7 +223,7 @@ quiz_data = {
         "type": "muscle",
         "question": "Select the muscles activated in downward facing dog.",
         "answers": ["Claves", "Hamstrings","Lats", "Spine"],
-        "imgs": [MUSCLE_SVG],
+        "imgs": [MUSCLE_SVG, "/static/img/poses/Downward Facing Dog.jpeg"],
         "user_data": "",
     }
 }

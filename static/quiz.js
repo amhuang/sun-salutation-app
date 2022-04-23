@@ -442,7 +442,7 @@ var MuscleId = function () {
         data["responses"].forEach((muscle, i) => {
             let muscleClass = "." + muscle.toLowerCase().replace(" ", "-")
             if (data["correct"][i]) {
-                $(muscleClass).addClass("selected")
+                $(muscleClass).addClass("correct")
             }
             else {
                 $(muscleClass).addClass("incorrect")

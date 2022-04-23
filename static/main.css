@@ -127,10 +127,13 @@ hr {
     fill:#AFA6D1;
 }
 .st1.incorrect {
-    fill:#ecb9c3;
+    fill:rgb(245, 180, 185);
 }
 .st1.missed {
-    fill:#a5d6b1;
+    fill:rgb(250, 229, 157);
+}
+.st1.correct {
+    fill:rgb(159, 218, 174);
 }
 .muscle-label{
     position:absolute;
