@@ -51,15 +51,22 @@ function loadInfo() {
     let row = $("<div class='row '>")
     let pcol = $("<div class='col-md-6'>")
     let filepath = d['gif'] +".gif"
-    let img = $("<img />").attr({src: filepath, width:'100%'})
+    let img = $("<img class='learnImg'/>").attr({src: filepath, width:'100%'})
     pcol.append(img)
     row.append(pcol)
 
+    let mcol = $("<div class='col-md-6'>")
+    let mfilepath = d['muscleImg']
+    let mImg = $("<img class='muscleimg'/>").attr({src: mfilepath})
+    mcol.append(mImg)
+    row.append(mcol)
+
+    
     let col = $("<div class='col-md-6'>")
     let desc_title = $("<div class=description-title >").html("Directions:")
     col.append(desc_title)
     d["Directions"].forEach(function(m){
-        let direction = $("<div class='quiz-question bullets'>").html("        -" + m)
+        let direction = $("<div class='quiz-question bullets'>").html("        - " + m)
         col.append(direction)
       })
     row.append(col)
@@ -68,7 +75,7 @@ function loadInfo() {
     let muscles_title = $("<div class=description-title >").html("Muscles:")
     col.append(muscles_title)
     d["Muscles"].forEach(function(m){
-      let muscle = $("<div class='quiz-question bullets'>").html("        -" + m)
+      let muscle = $("<div class='quiz-question bullets'>").html("        - " + m)
       col.append(muscle)
     })
     row.append(col)

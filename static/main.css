@@ -264,3 +264,10 @@ body {
     padding-left: 20px;
     margin-bottom: 1px;
 }
+
+/******************** LEARN ELEMENTS ********************/
+.muscleimg{
+    padding-left: 90px;
+    padding-top: 30px;
+    width: 60%
+}

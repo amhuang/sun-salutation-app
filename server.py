@@ -8,6 +8,9 @@ import random
 
 app = Flask(__name__)
 
+with open("./static/img/muscles/labeled.svg", "r") as f:
+    MUSCLE_SVG = f.read()
+
 learn_data = {
    "1": {
       "id": "1",
@@ -16,6 +19,7 @@ learn_data = {
       "Date" : "",
       "img": "/static/img/poses/Prayer Pose.jpeg",
       "gif": "/static/img/GIFs/1-mountain",
+      "muscleImg": "/static/img/muscles/poses/raised-arm.svg",
       "Directions": ["stand at the edge with feet together", "Expand your chest and relax shoulders", "Lift both arms from side as you inhale", "Bring your palms together on exhale"],
    },
 
@@ -26,6 +30,7 @@ learn_data = {
       "Date" : "",
       "img": "/static/img/poses/Raised Arm.jpeg",
       "gif": "/static/img/GIFs/2-raised",
+      "muscleImg": "/static/img/muscles/poses/raised-arm.svg",
       "Directions": ["Lift arms up and back on inhale", "Stretch whole body", "Push pelvis forward to deepen stretch"],
    },
 
@@ -36,6 +41,7 @@ learn_data = {
       "Date" : "",
       "img": "/static/img/poses/Half Forward Bend.jpeg",
       "gif": "/static/img/GIFs/3-forward",
+      "muscleImg": "/static/img/muscles/poses/forward-bend.svg",
       "Directions": ["Stretch forward", "Bend downwards", "Bring hands down to floor on exhale"],
    },
 
@@ -46,6 +52,7 @@ learn_data = {
       "Date" : "",
       "img": "/static/img/poses/Equestrian (L).jpeg",
       "gif": "/static/img/GIFs/4-equestrianL",
+      "muscleImg": "/static/img/muscles/poses/equestrian.svg",
       "Directions": ["Push right leg  back", "Look up", "Left foot between palms"]
    },
 
@@ -56,6 +63,7 @@ learn_data = {
       "Date" : "",
       "img": "/static/img/poses/plank.jpeg",
       "gif": "/static/img/GIFs/5-plank",
+      "muscleImg": "/static/img/muscles/poses/plank.svg",
       "Directions": ["Push left leg back","Do a plank with arms straight"],
    },
 
@@ -66,6 +74,7 @@ learn_data = {
       "Date" : "",
       "img": "/static/img/poses/Eight Point Salute.jpeg",
       "gif": "/static/img/GIFs/6-eight",
+      "muscleImg": "/static/img/muscles/poses/eight-point-salute.svg",
       "Directions": ["Bring knees to floor and exhale","Take hips back slightly", "Slide forward","Rest chest and chin on floor"],
    },
 
@@ -76,6 +85,7 @@ learn_data = {
       "Date" : "",
       "img": "/static/img/poses/Cobra.jpeg",
       "gif": "/static/img/GIFs/7-cobra",
+      "muscleImg": "/static/img/muscles/poses/cobra.svg",
       "Directions": ["Slide forward", "Raise chest", "Keep elbows bent"],
    },
 
@@ -86,6 +96,7 @@ learn_data = {
       "Date" : "",
       "img": "/static/img/poses/Downward Facing Dog.jpeg",
       "gif": "/static/img/GIFs/8-downward",
+      "muscleImg": "/static/img/muscles/poses/downward-dog.svg",
       "Directions": ["Lift hips", "Face chest downwards", "Keep heels to floor to deepen"],
    },
 
@@ -96,6 +107,7 @@ learn_data = {
       "Date" : "",
       "img": "/static/img/poses/Equestrian (R).jpeg",
       "gif": "/static/img/GIFs/9-equestrianR",
+      "muscleImg": "/static/img/muscles/poses/equestrian.svg",
       "Directions": ["Push right leg  back", "Look up" ,"Left foot between palms"],
    },
 
@@ -106,6 +118,7 @@ learn_data = {
       "Date" : "",
       "img": "/static/img/poses/Half Forward Bend.jpeg",
       "gif": "/static/img/GIFs/10-forward",
+      "muscleImg": "/static/img/muscles/poses/forward-bend.svg",
       "Directions": ["Stretch forward", "Bend downwards", "Bring hands down to floor on exhale"],
    },
 
@@ -116,6 +129,7 @@ learn_data = {
       "Date" : "",
       "img": "/static/img/poses/Raised Arm.jpeg",
       "gif": "/static/img/GIFs/11-raised",
+      "muscleImg": "/static/img/muscles/poses/raised-arm.svg",
       "Directions": ["Lift arms up and back on inhale", "Stretch whole body", "Push pelvis forward to deepen stretch"],
    },
 
@@ -126,14 +140,13 @@ learn_data = {
       "Date" : "",
       "img": "/static/img/poses/Prayer Pose.jpeg",
       "gif": "/static/img/GIFs/1-mountain",
+      "muscleImg": "/static/img/muscles/poses/raised-arm.svg",
       "Directions": ["Straighten body", "Bring arms down"],
    }
 }
 
 # Quiz data
 QUIZ_LEN = 10
-with open("./static/img/muscles/labeled.svg", "r") as f:
-    MUSCLE_SVG = f.read()
 
 quiz_data = {
     1: {
