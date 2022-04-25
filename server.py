@@ -313,6 +313,7 @@ def quiz_results():
         elif type == "ordering":
             ordering_score += response["score"]
         elif type == "muscle":
+            print(response)
             muscle_score += response["score"]
 
     score_data.update({

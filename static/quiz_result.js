@@ -32,5 +32,21 @@ function showResults() {
     c.append($("<p>").html(matching))
     c.append($("<p>").html(ordering))
     c.append($("<p>").html(muscle))
+
+    let header = $("<div class='quiz-heading learn-more'>").html("Areas to improve:")
+    c.append(header)
+
+    if(data["matching_score"]<=data["ordering_score"] && data["matching_score"]<=data["muscle_score"]){
+        let area = $("<div class='learn-more padding'>").html("- Matching the names to the poses")
+        c.append(area)
+    }
+    else if(data["ordering_score"]<=data["matching_score"] && data["ordering_score"]<=data["muscle_score"]){
+        let area = $("<div class='learn-more padding'>").html("- Ordering the poses of Sun Salutation")
+        c.append(area)
+    }
+    else if(data["muscle_score"]<=data["ordering_score"] && data["muscle_score"]<=data["matching_score"]){
+        let area = $("<div class='learn-more padding'>").html("- Identifying the muscle groups for each pose")
+        c.append(area)
+    }
     bindPrevBtn()
 }
