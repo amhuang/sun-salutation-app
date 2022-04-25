@@ -25,7 +25,6 @@ function loadInfo() {
     card.append(line)
     // card.append("HI")
   }
-
 }
 
 function createCards(){
@@ -54,10 +53,7 @@ function createCards(){
     else {
       $("#row2").append(col)
     }
-
-
   }
-
 }
 
 function bindHomeBtn () {
@@ -78,6 +74,6 @@ function bindPrevBtn() {
 
 
 function progressNum(){
-  let prog = $("<div class='progressNum'>").html("12/12")
+  let prog = $("<div class='progressNum'>").html("13/13")
   $("#quiz-nav").append(prog)
 }
