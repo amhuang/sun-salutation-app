@@ -1,8 +1,9 @@
 $(document).ready(function(){
+    createCards()
     displayProgress()
     bindHomeBtn()
     bindPrevBtn()
-    loadInfo()
+    // loadInfo()
 })
 
 len = 12
@@ -21,6 +22,38 @@ function loadInfo() {
     let line = $("<p class='normal_p'>").html("Viewed: " + d[i]["views"])
     card.append(line)
     // card.append("HI")
+  }
+
+}
+
+function createCards(){
+  for (i = 1; i<= 12; i++){
+    let col = $("<div class='col-md-2'>")
+    let card = $("<div class='flip-card'>")
+    let inner = $("<div class='flip-card-inner'>")
+    let front = $("<div class='flip-card-front'>")
+    let img = $("<img>").attr({src: d[i]["img"], width:'200px'})
+    let back = $("<div class='flip-card-back'>")
+    let name = $("<p>")
+    name.html(d[i]["Name"])
+    let views = $("<p class = 'normal_p'>")
+    views.html("Viewed: " + d[i]["views"])
+
+    back.append(name)
+    back.append(views)
+    front.append(img)
+    inner.append(front)
+    inner.append(back)
+    card.append(inner)
+    col.append(card)
+    if (i <= 6){
+      $("#row1").append(col)
+    }
+    else {
+      $("#row2").append(col)
+    }
+
+
   }
 
 }

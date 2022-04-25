@@ -6,53 +6,6 @@
 <script src="/static/learn_order.js"></script>
 <head>
 <style>
-  .flip-card {
-    background-color: transparent;
-    width: 200px;
-    height: 200px;
-    perspective: 1000px;
-    margin: 10px;
-  }
-
-  .flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    box-shadow: 0 4px 8px 0 rgb(181, 166, 212);
-  }
-
-  .flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
-  }
-
-  .flip-card-front, .flip-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-
-  .flip-card-front {
-    background-color:rgb(181, 166, 212);
-    color: black;
-  }
-
-  .flip-card-back {
-    background-color: rgb(181, 166, 212);
-    color: black;
-    transform: rotateY(180deg);
-  }
-  p{
-    font-size: 15px;
-    text-align:center;
-    margin-top:45%;
-    color: white;
-
-  }
 </style>
 </head>
 
@@ -60,147 +13,13 @@
     var d = {{ d|tojson }}
 </script>
 
-
-<div class="container">
+<div class="container" id="content">
   <div class="row">
     <h1>Check your knowledge!</h1>
   </div>
-  <div class="row">
-    <div class="col">
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="/static/img/poses/cobra.jpeg" style="width:200px">
-          </div>
-          <div class="flip-card-back" id = "7">
-            <p>Cobra</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="/static/img/poses/Downward Facing Dog.jpeg" style="width:200px">
-          </div>
-          <div class="flip-card-back" id = "8">
-            <p>Downward Facing Dog</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="/static/img/poses/Eight Point Salute.jpeg" style="width:200px">
-          </div>
-          <div class="flip-card-back" id = "6">
-            <p>Eight Point Salute</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="/static/img/poses/Equestrian (L).jpeg" style="width:200px">
-          </div>
-          <div class="flip-card-back" id = "4">
-            <p>Equestrian (L)</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="/static/img/poses/Equestrian (R).jpeg" style="width:200px">
-          </div>
-          <div class="flip-card-back" id = "9">
-            <p>Equestrian (R)</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-2">
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="/static/img/poses/Half Forward Bend.jpeg" style="width:200px">
-          </div>
-          <div class="flip-card-back" id = "3">
-            <p>Half Forward Bend</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="/static/img/poses/Mountain Pose.jpeg" style="width:200px">
-          </div>
-          <div class="flip-card-back" id = "12">
-            <p>Mountain Pose</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="/static/img/poses/Prayer Pose.jpeg" style="width:200px">
-          </div>
-          <div class="flip-card-back" id = "12">
-            <p>Mountain</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="/static/img/poses/plank.jpeg" style="width:200px">
-          </div>
-          <div class="flip-card-back" id = "5">
-            <p>Plank</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="/static/img/poses/Prayer Pose.jpeg" style="width:200px">
-          </div>
-          <div class="flip-card-back" id = "1">
-            <p>Prayer Pose</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="/static/img/poses/Raised Arm.jpeg" style="width:200px">
-          </div>
-          <div class="flip-card-back" id = "2">
-            <p>Raised Arm</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="row" id = "row1"></div>
+  <div class="row" id = "row2"></div>
+
 </div>
 
 <div class="container">
