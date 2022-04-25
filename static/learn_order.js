@@ -6,7 +6,7 @@ $(document).ready(function(){
     progressNum()
 })
 
-len = 11
+len = 12
 
 // Displays current progress in the progress bar
 function displayProgress() {
@@ -17,6 +17,13 @@ function displayProgress() {
 }
 
 function loadInfo() {
+  for (let i = 1; i <= len; i++) {
+    let card = $("#"+i)
+    let line = $("<p class='normal_p'>").html("Viewed: " + d[i]["views"])
+    card.append(line)
+    // card.append("HI")
+  }
+
 }
 
 function bindHomeBtn () {

@@ -276,6 +276,7 @@ body {
     width: 60%
 }
 
+
 .learn-title{
     margin-top: 130px !important;
     margin-left: 70px;
@@ -319,4 +320,12 @@ body {
     font-size: 20pt;
     color: rgb(181, 166, 212);
     margin-bottom: 0.25rem;
+}
+
+#next-btn{
+  margin-bottom: 30px;
+}
+
+.normal_p{
+  margin-top: 0px;
 }
