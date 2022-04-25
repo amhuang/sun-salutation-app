@@ -6,16 +6,16 @@ $(document).ready(function(){
     loadInfo()
 })
 
-len = 11
+len = 12
 
 function updateDate(){
   userData = {
       "id": d["id"],
-      "Date": Date()
+      "viewed": "1"
   }
   $.ajax({
       type: "POST",
-      url: "/update_time",
+      url: "/update_views",
       dataType : "json",
       contentType: "application/json; charset=utf-8",
       data: JSON.stringify(userData),
@@ -75,29 +75,6 @@ function loadInfo() {
         mcol.append(muscle)
     })
     row.append(mcol)
-
-    
-    // let col = $("<div class='col-md-6'>")
-    // let xdesc_title = $("<div class=description-title >").html("Directions:")
-    // col.append(desc_title)
-    // d["Directions"].forEach(function(m){
-    //     let direction = $("<div class='quiz-question bullets'>").html("        - " + m)
-    //     col.append(direction)
-    //   })
-    // row.append(col)
-    // c.append(row)
-
-    // let muscles_title = $("<div class=description-title >").html("Muscles:")
-    // col.append(muscles_title)
-    // d["Muscles"].forEach(function(m){
-    //   let muscle = $("<div class='quiz-question bullets'>").html("        - " + m)
-    //   col.append(muscle)
-    // })
-    // row.append(col)
-    // c.append(row)
-
-    // let subname = $("<div class='quiz-question'>").html(d["Name"])
-    // c.append($("<hr>"))
 }
 
 function bindNextBtn () {

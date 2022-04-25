@@ -271,3 +271,11 @@ body {
     padding-top: 30px;
     width: 60%
 }
+
+#next-btn{
+  margin-bottom: 30px;
+}
+
+.normal_p{
+  margin-top: 0px;
+}

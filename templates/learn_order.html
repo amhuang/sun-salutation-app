@@ -13,7 +13,7 @@
     perspective: 1000px;
     margin: 10px;
   }
-  
+
   .flip-card-inner {
     position: relative;
     width: 100%;
@@ -23,11 +23,11 @@
     transform-style: preserve-3d;
     box-shadow: 0 4px 8px 0 rgb(181, 166, 212);
   }
-  
+
   .flip-card:hover .flip-card-inner {
     transform: rotateY(180deg);
   }
-  
+
   .flip-card-front, .flip-card-back {
     position: absolute;
     width: 100%;
@@ -35,12 +35,12 @@
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
   }
-  
+
   .flip-card-front {
     background-color:rgb(181, 166, 212);
     color: black;
   }
-  
+
   .flip-card-back {
     background-color: rgb(181, 166, 212);
     color: black;
@@ -56,6 +56,10 @@
 </style>
 </head>
 
+<script>
+    var d = {{ d|tojson }}
+</script>
+
 
 <div class="container">
   <div class="row">
@@ -68,7 +72,7 @@
           <div class="flip-card-front">
             <img src="/static/img/poses/cobra.jpeg" style="width:200px">
           </div>
-          <div class="flip-card-back">
+          <div class="flip-card-back" id = "7">
             <p>Cobra</p>
           </div>
         </div>
@@ -80,7 +84,7 @@
           <div class="flip-card-front">
             <img src="/static/img/poses/Downward Facing Dog.jpeg" style="width:200px">
           </div>
-          <div class="flip-card-back">
+          <div class="flip-card-back" id = "8">
             <p>Downward Facing Dog</p>
           </div>
         </div>
@@ -92,7 +96,7 @@
           <div class="flip-card-front">
             <img src="/static/img/poses/Eight Point Salute.jpeg" style="width:200px">
           </div>
-          <div class="flip-card-back">
+          <div class="flip-card-back" id = "6">
             <p>Eight Point Salute</p>
           </div>
         </div>
@@ -104,7 +108,7 @@
           <div class="flip-card-front">
             <img src="/static/img/poses/Equestrian (L).jpeg" style="width:200px">
           </div>
-          <div class="flip-card-back">
+          <div class="flip-card-back" id = "4">
             <p>Equestrian (L)</p>
           </div>
         </div>
@@ -116,7 +120,7 @@
           <div class="flip-card-front">
             <img src="/static/img/poses/Equestrian (R).jpeg" style="width:200px">
           </div>
-          <div class="flip-card-back">
+          <div class="flip-card-back" id = "9">
             <p>Equestrian (R)</p>
           </div>
         </div>
@@ -130,7 +134,7 @@
           <div class="flip-card-front">
             <img src="/static/img/poses/Half Forward Bend.jpeg" style="width:200px">
           </div>
-          <div class="flip-card-back">
+          <div class="flip-card-back" id = "3">
             <p>Half Forward Bend</p>
           </div>
         </div>
@@ -142,7 +146,7 @@
           <div class="flip-card-front">
             <img src="/static/img/poses/Mountain Pose.jpeg" style="width:200px">
           </div>
-          <div class="flip-card-back">
+          <div class="flip-card-back" id = "12">
             <p>Mountain Pose</p>
           </div>
         </div>
@@ -154,7 +158,7 @@
           <div class="flip-card-front">
             <img src="/static/img/poses/Prayer Pose.jpeg" style="width:200px">
           </div>
-          <div class="flip-card-back">
+          <div class="flip-card-back" id = "12">
             <p>Mountain</p>
           </div>
         </div>
@@ -166,7 +170,7 @@
           <div class="flip-card-front">
             <img src="/static/img/poses/plank.jpeg" style="width:200px">
           </div>
-          <div class="flip-card-back">
+          <div class="flip-card-back" id = "5">
             <p>Plank</p>
           </div>
         </div>
@@ -178,7 +182,7 @@
           <div class="flip-card-front">
             <img src="/static/img/poses/Prayer Pose.jpeg" style="width:200px">
           </div>
-          <div class="flip-card-back">
+          <div class="flip-card-back" id = "1">
             <p>Prayer Pose</p>
           </div>
         </div>
@@ -190,7 +194,7 @@
           <div class="flip-card-front">
             <img src="/static/img/poses/Raised Arm.jpeg" style="width:200px">
           </div>
-          <div class="flip-card-back">
+          <div class="flip-card-back" id = "2">
             <p>Raised Arm</p>
           </div>
         </div>
@@ -202,7 +206,7 @@
 <div class="container">
     <div class="row">
         <div id="quiz-nav" class="col-md">
-            <button type='button' id="home-btn" class='btn btn-purple float-end'>Home</button>
+            <button type='button' id="next-btn" class='btn btn-purple float-end'>Home</button>
         </div>
     </div>
 </div>
