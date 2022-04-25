@@ -7,16 +7,16 @@ $(document).ready(function(){
     progressNum()
 })
 
-len = 11
+len = 12
 
 function updateDate(){
   userData = {
       "id": d["id"],
-      "Date": Date()
+      "viewed": "1"
   }
   $.ajax({
       type: "POST",
-      url: "/update_time",
+      url: "/update_views",
       dataType : "json",
       contentType: "application/json; charset=utf-8",
       data: JSON.stringify(userData),
@@ -101,6 +101,7 @@ function loadInfo() {
 
     // let subname = $("<div class='quiz-question'>").html(d["Name"])
     // c.append($("<hr>"))
+
 }
 
 function bindNextBtn () {
