@@ -271,3 +271,40 @@ body {
     padding-top: 30px;
     width: 60%
 }
+
+.learn-title{
+    margin-top: 130px !important;
+    margin-left: 70px;
+    font-size: 23px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: rgb(110, 109, 109);
+    font-family: 'Playfair Display', serif;
+
+}
+
+.learn-bullets{
+    margin-top: 10px;
+    margin-left:100px;
+    font-size: 18px;
+    color: rgb(110, 109, 109);
+    font-family: 'Lato', sans-serif;
+
+
+}
+
+.muscle-title{
+    margin-top: 100px;
+    margin-left: 70px;
+    font-size: 23px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: rgb(110, 109, 109);
+    font-family: 'Playfair Display', serif;
+
+}
+
+.padding{
+    padding-bottom: 50px;
+    
+}
