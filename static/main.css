@@ -306,5 +306,13 @@ body {
 
 .padding{
     padding-bottom: 50px;
-    
+}
+
+.progressNum{
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 20pt;
+    color: rgb(181, 166, 212);
+    margin-bottom: 0.25rem;
 }

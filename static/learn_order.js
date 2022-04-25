@@ -3,6 +3,7 @@ $(document).ready(function(){
     bindHomeBtn()
     bindPrevBtn()
     loadInfo()
+    progressNum()
 })
 
 len = 11
@@ -32,4 +33,10 @@ function bindPrevBtn() {
       window.location.href = "/learn/" + len
     })
     $("#quiz-nav").append(prevBtn)
+}
+
+
+function progressNum(){
+  let prog = $("<div class='progressNum'>").html("12/12")
+  $("#quiz-nav").append(prog)
 }

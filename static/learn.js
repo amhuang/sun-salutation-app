@@ -4,6 +4,7 @@ $(document).ready(function(){
     bindNextBtn()
     bindPrevBtn()
     loadInfo()
+    progressNum()
 })
 
 len = 11
@@ -126,4 +127,9 @@ function bindPrevBtn() {
         })
         $("#quiz-nav").append(prevBtn)
     }
+}
+
+function progressNum(){
+    let prog = $("<div class='progressNum'>").html(d["id"] +"/12")
+    $("#quiz-nav").append(prog)
 }
