@@ -105,6 +105,6 @@ function bindPrevBtn() {
 }
 
 function progressNum(){
-    let prog = $("<div class='progressNum'>").html(d["id"] +"/12")
+    let prog = $("<div class='progressNum'>").html(d["id"] +"/13")
     $("#quiz-nav").append(prog)
 }
