@@ -7,6 +7,7 @@
     border-radius: 0.5rem;
     margin: auto;
 }
+
 .progress {
     position: fixed;
     bottom: 0px;
@@ -14,20 +15,24 @@
     border-radius: 0px;
     z-index: 100;
 }
+
 hr {
     margin: 1rem 0 1.25rem 0;
 }
+
 
 /******************** QUIZ ELEMENTS ********************/
 
 #quiz-nav {
     margin-top: 1rem;
 }
-.quiz-pose img{
+
+.quiz-pose img {
     max-height: 110px;
     max-width: 100%;
     margin: auto;
 }
+
 .quiz-label {
     text-align: center;
     display: inline-block;
@@ -39,24 +44,30 @@ hr {
     background-color: white;
     z-index: 2;
 }
+
 .quiz-label:hover {
-    background-color: rgb(217,210,232);
+    background-color: rgb(217, 210, 232);
 }
+
 .quiz-label.locked:hover {
     background-color: white;
 }
+
 .quiz-label.dropped {
     margin: 0;
     width: 100%;
     top: 0;
     left: 0;
 }
+
 .quiz-label.correct {
     border: 2px solid #28a745;
 }
+
 .quiz-label.incorrect {
     border: 2px solid #DC3553;
 }
+
 .quiz-label-drop {
     background-color: whitesmoke;
     border-radius: 0.5rem;
@@ -65,9 +76,11 @@ hr {
     width: 100%;
     margin-bottom: 0.25rem;
 }
+
 .quiz-label-drop.incorrect {
     border: 2px solid #DC3553;
 }
+
 .quiz-img-drag {
     max-width: 100%;
     padding: .5rem .5rem;
@@ -75,68 +88,86 @@ hr {
     border: 2px solid rgb(181, 166, 212);
     aspect-ratio: 1;
 }
+
 .quiz-img-drag img {
     max-width: 100%;
     margin: auto;
 }
+
 .quiz-img-drag.correct {
     border: 2px solid #28a745;
 }
+
 .quiz-img-drag.incorrect {
     border: 2px solid #DC3553;
 }
+
 .quiz-img-drop {
     aspect-ratio: 1;
     background-color: whitesmoke;
     border-radius: 0.5rem;
     font-size: 1.25rem;
 }
+
 .quiz-img-drop.incorrect {
     border: 2px solid #DC3553;
 }
+
 .quiz-img-drop.ui-draggable-active p {
     display: inline;
 }
+
 .quiz-img-drop.taken p {
     display: none;
 }
+
 .align-middle {
     position: relative;
     top: 50%;
     transform: translateY(calc(-50%));
 }
+
 #matching-options {
     min-height: 3rem;
 }
+
 #ordering-responses {
     padding: 0 5%;
 }
+
 #ordering-options {
     min-height: 3rem;
     padding: 0 5%;
 }
+
 .svg {
     max-width: 50%;
     max-height: 400px;
 }
+
 .st1.hover {
-    fill:#ccc6e1;
+    fill: #ccc6e1;
     cursor: pointer;
 }
+
 .st1.selected {
-    fill:#AFA6D1;
+    fill: #AFA6D1;
 }
+
 .st1.incorrect {
-    fill:rgb(245, 180, 185);
+    fill: rgb(245, 180, 185);
 }
+
 .st1.missed {
-    fill:rgb(250, 229, 157);
+    fill: rgb(250, 229, 157);
 }
+
 .st1.correct {
-    fill:rgb(159, 218, 174);
+    fill: rgb(159, 218, 174);
 }
-.muscle-label{
-    position:absolute;
+
+.muscle-label {
+    position: absolute;
     text-align: center;
     display: inline-block;
     padding: .4rem .75rem;
@@ -147,20 +178,24 @@ hr {
     background-color: white;
     z-index: 2;
 }
+
 .muscle-side-pose {
     max-width: 100%;
     max-height: 150px;
-    padding:.75rem;
+    padding: .75rem;
     border-radius: 0.5rem;
     border: 2px solid rgb(181, 166, 212);
 }
+
 .ui-draggable {
     cursor: move;
 }
+
 .ui-draggable-dragging {
     z-index: 10;
 }
-.ui-droppable-hover  {
+
+.ui-droppable-hover {
     background-color: rgb(228, 228, 228);
 }
 
@@ -170,28 +205,34 @@ hr {
 .bg-purple {
     background-color: rgb(181, 166, 212);
 }
+
 .bg-light-purple {
-    background-color: rgb(217,210,232);
+    background-color: rgb(217, 210, 232);
 }
+
 .btn-purple {
     color: white;
     background-color: rgb(181, 166, 212);
     border-color: rgb(181, 166, 212);
 }
-.btn-purple:hover{
+
+.btn-purple:hover {
     color: white;
-    background-color: rgb(142,125,192);
-    border-color: rgb(142,125,192);
+    background-color: rgb(142, 125, 192);
+    border-color: rgb(142, 125, 192);
 }
+
 
 /******************** FONTS & TEXT ********************/
 
 body {
     font-family: 'Lato', sans-serif;
 }
+
 .nav-link {
     font-size: 1.25rem;
 }
+
 .title {
     font-family: 'Playfair Display', serif;
     font-weight: bold;
@@ -199,6 +240,7 @@ body {
     text-align: center;
     color: rgb(181, 166, 212);
 }
+
 .quiz-heading {
     font-family: 'Playfair Display', serif;
     font-weight: 700;
@@ -206,6 +248,7 @@ body {
     color: rgb(181, 166, 212);
     margin-bottom: 0.25rem;
 }
+
 .quiz-question {
     font-size: 1rem;
     margin-bottom: 1.25rem;
@@ -219,5 +262,5 @@ body {
 
 .bullets {
     padding-left: 20px;
-    margin-bottom:1px;
+    margin-bottom: 1px;
 }
