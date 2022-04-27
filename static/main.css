@@ -23,7 +23,7 @@ hr {
 
 /******************** QUIZ ELEMENTS ********************/
 
-#quiz-nav {
+.quiz-nav {
     margin-top: 1rem;
 }
 
@@ -199,7 +199,7 @@ hr {
     background-color: rgb(228, 228, 228);
 }
 
-.learn-more{
+.learn-more {
     padding-top: 20px;
 }
 
@@ -269,14 +269,16 @@ body {
     margin-bottom: 1px;
 }
 
+
 /******************** LEARN ELEMENTS ********************/
-.muscleimg{
+
+.muscleimg {
     padding-left: 90px;
     padding-top: 30px;
     width: 60%
 }
 
-.learn-title{
+.learn-title {
     margin-top: 130px !important;
     margin-left: 70px;
     font-size: 23px;
@@ -284,20 +286,17 @@ body {
     font-weight: bold;
     color: rgb(110, 109, 109);
     font-family: 'Playfair Display', serif;
-
 }
 
-.learn-bullets{
+.learn-bullets {
     margin-top: 10px;
-    margin-left:100px;
+    margin-left: 100px;
     font-size: 18px;
     color: rgb(110, 109, 109);
     font-family: 'Lato', sans-serif;
-
-
 }
 
-.muscle-title{
+.muscle-title {
     margin-top: 100px;
     margin-left: 70px;
     font-size: 23px;
@@ -305,14 +304,13 @@ body {
     font-weight: bold;
     color: rgb(110, 109, 109);
     font-family: 'Playfair Display', serif;
-
 }
 
-.padding{
+.padding {
     padding-bottom: 50px;
 }
 
-.progressNum{
+.progressNum {
     text-align: center;
     font-family: 'Playfair Display', serif;
     font-weight: 700;
@@ -321,10 +319,10 @@ body {
     margin-bottom: 0.25rem;
 }
 
-#next-btn{
-  margin-bottom: 30px;
+#next-btn {
+    margin-bottom: 30px;
 }
 
-.normal_p{
-  margin-top: 0px;
+.normal_p {
+    margin-top: 0px;
 }
