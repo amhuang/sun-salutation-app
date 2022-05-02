@@ -24,6 +24,10 @@ p {
     color:rgb(44, 44, 44)
 }
 
+.padding-left {
+    padding-left: 30px;
+}
+
 /******************** QUIZ ELEMENTS ********************/
 
 .quiz-nav {
@@ -47,9 +51,11 @@ p {
     background-color: white;
     z-index: 2;
 }
+
 .quiz-label-static.correct {
     border: 2px solid #28a745;
 }
+
 .quiz-label-static.missing {
     border: 2px solid #ffc107;
 }

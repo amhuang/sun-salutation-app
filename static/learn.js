@@ -82,7 +82,6 @@ function bindNextBtn() {
     $("#next-btn").html("Next")
     $("#next-btn").click(function() {
         if (d["id"] < len) {
-            //console.log("redirecting to", "/quiz/" + (data["id"] + 1))
             num = parseInt(d["id"]) + 1
             window.location.href = "/learn/" + (num)
         } else if (d["id"] == len) {
