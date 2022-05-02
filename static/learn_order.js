@@ -9,37 +9,34 @@ $(document).ready(function(){
 
 len = 12
 
-function createCards(){
-  for (i = 1; i<= 12; i++){
-    let col = $("<div class='col-md-2'>")
-    let card = $("<div class='flip-card'>")
-    let inner = $("<div class='flip-card-inner'>")
-    let front = $("<div class='flip-card-front'>")
-    let img = $("<img>").attr({src: d[i]["img"], width:'200px'})
-    let back = $("<div class='flip-card-back'>")
-    let name = $("<p>")
-    name.html(d[i]["Name"])
-    let views = $("<p class = 'normal_p'>")
-    views.html("Viewed: " + d[i]["views"])
-
-    back.append(name)
-    back.append(views)
-    front.append(img)
-    inner.append(front)
-    inner.append(back)
-    card.append(inner)
-    col.append(card)
-    if (i <= 6){
-      $("#row1").append(col)
-    }
-    else {
-      $("#row2").append(col)
-    }
-
-
-  }
-
-}
+// function createCards(){
+//   for (i = 1; i<= 12; i++){
+//     let col = $("<div class='col-md-2'>")
+//     let card = $("<div class='flip-card'>")
+//     let inner = $("<div class='flip-card-inner'>")
+//     let front = $("<div class='flip-card-front'>")
+//     let img = $("<img>").attr({src: d[i]["img"], width:'200px'})
+//     let back = $("<div class='flip-card-back'>")
+//     let name = $("<p>")
+//     name.html(d[i]["Name"])
+//     let views = $("<p class = 'normal_p'>")
+//     views.html("Viewed: " + d[i]["views"])
+//
+//     back.append(name)
+//     back.append(views)
+//     front.append(img)
+//     inner.append(front)
+//     inner.append(back)
+//     card.append(inner)
+//     col.append(card)
+//     if (i <= 6){
+//       $("#row1").append(col)
+//     }
+//     else {
+//       $("#row2").append(col)
+//     }
+//   }
+// }
 
 // Displays current progress in the progress bar
 function displayProgress() {
@@ -59,11 +56,32 @@ function loadInfo() {
 }
 
 function createCards(){
+  min = d[1]["views"]
+  max = d[1]["views"]
+  for (i = 2; i<= 12; i++) {
+    if (d[i]["views"] < min) {
+      min = d[i]["views"]
+    }
+    if (d[i]["views"] > max) {
+      max = d[i]["views"]
+    }
+  }
+
+
+
   for (i = 1; i<= 12; i++){
     let col = $("<div class='col-md-2'>")
     let card = $("<div class='flip-card'>")
     let inner = $("<div class='flip-card-inner'>")
+    if (d[i]["views"] == max){
+      inner.attr("style", "box-shadow: 0 4px 8px 0 green")
+    }
+    else if (d[i]["views"] == min){
+      inner.attr("style", "box-shadow: 0 4px 8px 0 red")
+    }
     let front = $("<div class='flip-card-front'>")
+    let order = $("<div class='order_text'>")
+    order.html(i)
     let img = $("<img>").attr({src: d[i]["img"], width:'200px'})
     let back = $("<div class='flip-card-back'>")
     let name = $("<p>")
@@ -78,6 +96,7 @@ function createCards(){
     inner.append(back)
     card.append(inner)
     col.append(card)
+    col.append(order)
     if (i <= 6){
       $("#row1").append(col)
     }
