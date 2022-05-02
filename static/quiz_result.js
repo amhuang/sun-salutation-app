@@ -1,5 +1,8 @@
 $(document).ready(function(){
-    showResults()
+    if (checkComplete()) {
+        showResults()
+        bindPrevBtn()
+    }
 })
 
 function bindPrevBtn() {
@@ -10,10 +13,9 @@ function bindPrevBtn() {
     $("#quiz-nav").append(prevBtn)
 }
 
-function showResults() {
-    c = $("#content")
-
+function checkComplete() {
     // Quiz incomplete error checking
+
     if (data["incomplete"] > 0) {
         err = "The quiz is incomplete. Continue where you left off and complete the quiz to see your results."
         c.append($("<p>").html(err))
@@ -23,10 +25,16 @@ function showResults() {
             window.location.href = "/quiz/" + (data["incomplete"])
         })
         $("#quiz-nav").append(resume)
-        return
+        return false
     }
+    return true
+}
+
+function showResults() {
+    c = $("#content")
 
     // Display scores and buttons to return to the quiz sections you missed
+    
     row = $("<div class='row'>")
     col_matching = $("<div class='col-md-4 text-center'>")
     col_ordering = $("<div class='col-md-4 text-center'>")
@@ -60,7 +68,9 @@ function showResults() {
     row.append(col_matching, col_ordering, col_muscle)
     c.append($("<hr>"), row, $("<br>"), $("<hr>"), $("<br>"))
 
+
     // Buttons to go back to learn or to restart
+    
     row = $("<div class='row'>")
     col_restart = $("<div class='col-md-6 text-center'>")
     restart_btn = $("<button type='button' class='btn btn-lg btn-purple'>").html("Retake Quiz")
@@ -78,23 +88,4 @@ function showResults() {
 
     row.append(col_learn, col_restart)
     c.append(row)
-
-    /*
-    header = $("<div class='quiz-heading learn-more'>").html("Areas to improve:")
-    c.append(header)
-
-    if(data["matching_score"]<=data["ordering_score"] && data["matching_score"]<=data["muscle_score"]){
-        let area = $("<div class='learn-more padding'>").html("- Matching the names to the poses")
-        c.append(area)
-    }
-    else if(data["ordering_score"]<=data["matching_score"] && data["ordering_score"]<=data["muscle_score"]){
-        let area = $("<div class='learn-more padding'>").html("- Ordering the poses of Sun Salutation")
-        c.append(area)
-    }
-    else if(data["muscle_score"]<=data["ordering_score"] && data["muscle_score"]<=data["matching_score"]){
-        let area = $("<div class='learn-more padding'>").html("- Identifying the muscle groups for each pose")
-        c.append(area)
-    }
-    bindPrevBtn()
-    */
 }

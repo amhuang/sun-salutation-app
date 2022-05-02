@@ -20,6 +20,9 @@ hr {
     margin: 1rem 0 1.25rem 0;
 }
 
+p {
+    color:rgb(44, 44, 44)
+}
 
 /******************** QUIZ ELEMENTS ********************/
 
@@ -31,6 +34,24 @@ hr {
     max-height: 110px;
     max-width: 100%;
     margin: auto;
+}
+
+.quiz-label-static {
+    text-align: center;
+    display: inline-block;
+    padding: .4rem .75rem;
+    border-radius: 0.5rem;
+    border: 2px solid rgb(181, 166, 212);
+    margin-right: 10px;
+    margin-top: 0.5rem;
+    background-color: white;
+    z-index: 2;
+}
+.quiz-label-static.correct {
+    border: 2px solid #28a745;
+}
+.quiz-label-static.missing {
+    border: 2px solid #ffc107;
 }
 
 .quiz-label {
@@ -129,6 +150,11 @@ hr {
 
 #matching-options {
     min-height: 3rem;
+    padding-bottom: 1rem;
+}
+
+#pose-data {
+    margin-top: 1rem;
 }
 
 #ordering-responses {
@@ -141,8 +167,7 @@ hr {
 }
 
 .svg {
-    max-width: 50%;
-    max-height: 400px;
+    max-height: 450px;
 }
 
 .st1.hover {
