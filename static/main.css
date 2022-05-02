@@ -277,6 +277,7 @@ p {
 .btn-outline-purple {
     color: rgb(142, 125, 192);
     border-color: rgb(142, 125, 192);
+    border-width: 2px;
 }
 
 .btn-outline-purple:hover {
@@ -380,6 +381,7 @@ body {
 
 #next-btn {
     margin-bottom: 30px;
+    margin-left: 15px;
 }
 
 .normal_p {

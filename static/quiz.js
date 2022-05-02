@@ -77,6 +77,16 @@ function bindPrevBtn() {
     }
 }
 
+function insertReviewBtn() {
+    if ("learn_link" in data) {
+        review_btn = $("<button type='button' id='prev-btn' class='btn btn-outline-purple float-end'>").html("Review in Learn")
+        review_btn.insertAfter($("#next-btn"))
+        review_btn.click(function() {
+            window.location.href = data["learn_link"]
+        })
+    }
+}
+
 // Shuffles an array at random
 function shuffle(array) {
     arr = array.slice(0)
@@ -210,6 +220,7 @@ var Matching = function() {
         // Show unused answers in answer bank and next button
         showOptions(data["unused"])
         $(".quiz-label").addClass("locked")
+        insertReviewBtn()
         bindNextBtn()
     }
 
@@ -338,6 +349,7 @@ var Ordering = function() {
 
         // Show unused answers in answer bank and next button
         showOptions(data["unused"])
+        insertReviewBtn()
         bindNextBtn()
     }
 
@@ -465,6 +477,7 @@ var MuscleId = function () {
             label_cont.append(label)
         })
         $("#pose-data").append(label_cont)
+        insertReviewBtn()
         bindNextBtn()
     }
 

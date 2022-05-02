@@ -26,7 +26,7 @@ learn_data = {
    "2": {
       "id": "2",
       "Name":"Raised Arm Pose",
-      "Muscles": ["Hamstrings","Calves", "Spine", "Chest", "Shoulders"],
+      "Muscles": ["Hamstrings", "Spine", "Chest", "Shoulders"],
       "views" : "0",
       "img": "/static/img/poses/Raised Arm.jpeg",
       "gif": "/static/img/GIFs/2-raised",
@@ -48,7 +48,7 @@ learn_data = {
    "4": {
       "id": "4",
       "Name":"Equestrian Pose (L)",
-      "Muscles": ["Calves", "Hamstrings", "Quadriceps", "Hip Flexors"],
+      "Muscles": ["Calves", "Hamstrings", "Quadriceps"],
       "views" : "0",
       "img": "/static/img/poses/Equestrian (L).jpeg",
       "gif": "/static/img/GIFs/4-equestrianL",
@@ -92,7 +92,7 @@ learn_data = {
    "8": {
       "id": "8",
       "Name":"Downward Facing Dog",
-      "Muscles":["Claves", "Hamstrings","Lats", "Spine"],
+      "Muscles":["Calves", "Hamstrings","Lats", "Spine"],
       "views" : "0",
       "img": "/static/img/poses/Downward Facing Dog.jpeg",
       "gif": "/static/img/GIFs/8-downward",
@@ -103,7 +103,7 @@ learn_data = {
    "9": {
       "id": "9",
       "Name":"Equestrian Pose (R)",
-      "Muscles": ["Calves", "Hamstrings","Quadriceps","Hip Flexors"],
+      "Muscles": ["Calves", "Hamstrings","Quadriceps"],
       "views" : "0",
       "img": "/static/img/poses/Equestrian (R).jpeg",
       "gif": "/static/img/GIFs/9-equestrianR",
@@ -125,7 +125,7 @@ learn_data = {
    "11": {
       "id": "11",
       "Name":"Raised Arm Pose",
-      "Muscles": ["Hamstrings","Calves", "Spine", "Chest", "Shoulders"],
+      "Muscles": ["Hamstrings", "Spine", "Chest", "Shoulders"],
       "views" : "0",
       "img": "/static/img/poses/Raised Arm.jpeg",
       "gif": "/static/img/GIFs/11-raised",
@@ -157,6 +157,7 @@ quiz_data = {
         "answers": ["Cobra", "Downward Facing Dog", "Eight Point Salute", "Equestrian", "Half Forward Bend", "Plank", "Mountain Pose", "Raised Arm"],
         "imgs": ["/static/img/poses/Cobra.jpeg", "/static/img/poses/Downward Facing Dog.jpeg", "/static/img/poses/Eight Point Salute.jpeg", "/static/img/poses/Equestrian (L).jpeg", "/static/img/poses/Half Forward Bend.jpeg", "/static/img/poses/Plank.jpeg", "/static/img/poses/Mountain Pose.jpeg", "/static/img/poses/Raised Arm.jpeg"],
         "user_data": "",
+        "learn_link": "/learn_order"
     },
     2: {
         "id": 2,
@@ -166,6 +167,7 @@ quiz_data = {
         "answers": ["Prayer Pose", "Raised Arm", "Half Forward Bend", "Equestrian (L)", "Plank", "Eight Point Salute"],
         "imgs": ["/static/img/poses/Prayer Pose.jpeg", "/static/img/poses/Raised Arm.jpeg", "/static/img/poses/Half Forward Bend.jpeg", "/static/img/poses/Equestrian (L).jpeg", "/static/img/poses/Plank.jpeg", "/static/img/poses/Eight Point Salute.jpeg"],
         "user_data": "",
+        "learn_link": "/learn_order"
     },
     3: {
         "id": 3,
@@ -175,6 +177,7 @@ quiz_data = {
         "answers": ["Cobra", "Downward Facing Dog", "Equestrian (R)", "Half Forward Bend", "Raised Arm", "Mountain Pose"],
         "imgs": ["/static/img/poses/Cobra.jpeg", "/static/img/poses/Downward Facing Dog.jpeg", "/static/img/poses/Equestrian (R).jpeg", "/static/img/poses/Half Forward Bend.jpeg", "/static/img/poses/Raised Arm.jpeg", "/static/img/poses/Mountain Pose.jpeg"],
         "user_data": "",
+        "learn_link": "/learn_order"
     },
     4: {
         "id": 4,
@@ -184,6 +187,7 @@ quiz_data = {
         "answers": ["Calves","Chest","Hamstrings","Shoulders","Spine"],
         "imgs": [MUSCLE_SVG, "/static/img/poses/Raised Arm.jpeg"],
         "user_data": "",
+        "learn_link": "/learn/2"
     },
     5: {
         "id": 5,
@@ -193,15 +197,17 @@ quiz_data = {
         "answers": ["Hamstrings","Calves","Spine"],
         "imgs": [MUSCLE_SVG, "/static/img/poses/Half Forward Bend.jpeg"],
         "user_data": "",
+        "learn_link": "/learn/3",
     },
     6: {
         "id": 6,
         "len": QUIZ_LEN,
         "type": "muscle",
         "question": "Select the muscles activated in equestrian pose",
-        "answers": ["Calves", "Hamstrings", "Quadriceps", "Hip Flexors"],
+        "answers": ["Calves", "Hamstrings", "Quadriceps"],
         "imgs": [MUSCLE_SVG, "/static/img/poses/Equestrian (R).jpeg"],
         "user_data": "",
+        "learn_link": "/learn/4",
     },
     7: {
         "id": 7,
@@ -211,6 +217,7 @@ quiz_data = {
         "answers": ["Abs", "Obliques", "Shoulders"],
         "imgs": [MUSCLE_SVG, "/static/img/poses/Plank.jpeg"],
         "user_data": "",
+        "learn_link": "/learn/5"
     },
     8: {
         "id": 8,
@@ -220,6 +227,7 @@ quiz_data = {
         "answers": ["Shoulders","Spine"],
         "imgs": [MUSCLE_SVG, "/static/img/poses/Eight Point Salute.jpeg"],
         "user_data": "",
+        "learn_link": "/learn/6"
     },
     9: {
         "id": 9,
@@ -229,15 +237,17 @@ quiz_data = {
         "answers": ["Lower Back", "Lats","Lower Traps"],
         "imgs": [MUSCLE_SVG, "/static/img/poses/Cobra.jpeg"],
         "user_data": "",
+        "learn_link": "/learn/7"
     },
     10: {
         "id": 10,
         "len": QUIZ_LEN,
         "type": "muscle",
         "question": "Select the muscles activated in downward facing dog.",
-        "answers": ["Claves", "Hamstrings","Lats", "Spine"],
+        "answers": ["Calves", "Hamstrings","Lats", "Spine"],
         "imgs": [MUSCLE_SVG, "/static/img/poses/Downward Facing Dog.jpeg"],
         "user_data": "",
+        "learn_link": "/learn/8"
     }
 }
 
