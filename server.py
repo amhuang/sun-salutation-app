@@ -11,6 +11,7 @@ app = Flask(__name__)
 with open("./static/img/muscles/labeled.svg", "r") as f:
     MUSCLE_SVG = f.read()
 
+# Learning data
 learn_data = {
    "1": {
       "id": "1",
@@ -251,20 +252,24 @@ quiz_data = {
     }
 }
 
+# Home Page
 @app.route('/')
 def home():
     return render_template('home.html')
 
+# Learning Module
 @app.route('/learn/<id>')
 def learn(id=None):
     global learn
     d = learn_data[id]
     return render_template('learn.html', d = d)
 
+# Learning Overview
 @app.route('/learn_order')
 def learn_order():
     return render_template('learn_order.html', d = learn_data)
 
+# Update Learning
 @app.route('/update_views', methods = ['POST'])
 def update_views():
     json_data = request.get_json()
@@ -278,6 +283,7 @@ def update_views():
 
     return jsonify(data=learn_data)
 
+# Quiz Module
 @app.route('/quiz/<id>', methods = ['POST', 'GET'])
 def quiz(id=None):
     id = int(id)
@@ -296,6 +302,7 @@ def quiz(id=None):
         print(quiz_data[id]["user_data"]["score"])
         return jsonify(data=data)
 
+# Restart Quiz
 @app.route("/quiz/restart", methods = ['GET'])
 def quiz_restart():
     for q in quiz_data:
@@ -303,6 +310,7 @@ def quiz_restart():
     data = quiz_data[1]
     return render_template('quiz.html', data=data)
 
+# Quiz Result
 @app.route('/quiz_result', methods = ['GET'])
 def quiz_results():
     matching_score = 0
