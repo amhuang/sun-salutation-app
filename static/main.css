@@ -203,6 +203,29 @@ hr {
     padding-top: 20px;
 }
 
+#quiz-result-header {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 20pt;
+    color: rgb(181, 166, 212);
+    margin-bottom: 0.25rem;
+    padding: 0.75rem 0;
+    text-align: center;
+}
+
+.score-display {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 48pt;
+    color: rgb(181, 166, 212);
+    margin-bottom: 0.25rem;
+    text-align: center;
+}
+
+.score-description {
+    text-align: center;
+    font-size: 16pt;
+}
 
 /******************** COLORS ********************/
 
@@ -226,6 +249,16 @@ hr {
     border-color: rgb(142, 125, 192);
 }
 
+.btn-outline-purple {
+    color: rgb(142, 125, 192);
+    border-color: rgb(142, 125, 192);
+}
+
+.btn-outline-purple:hover {
+    color: white;
+    background-color: rgb(142, 125, 192);
+    border-color: rgb(142, 125, 192);
+}
 
 /******************** FONTS & TEXT ********************/
 

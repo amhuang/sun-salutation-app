@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    
     showResults()
 })
 
@@ -24,17 +23,41 @@ function showResults() {
         $("#quiz-nav").append(resume)
         return
     }
-
-    matching = "Matching Score: " + data["matching_score"] + "/" + data["matching_total"]
-    ordering = "Ordering Score: " + data["ordering_score"] + "/" + data["ordering_total"]
-    muscle = "Muscle Identification Score: " + data["muscle_score"] + "/" + data["muscle_total"]
+    row = $("<div class='row'>")
+    col_matching = $("<div class='col-md-4 text-center'>")
+    col_ordering = $("<div class='col-md-4 text-center'>")
+    col_muscle = $("<div class='col-md-4 text-center'>")
     
-    c.append($("<p>").html(matching))
-    c.append($("<p>").html(ordering))
-    c.append($("<p>").html(muscle))
+    matching = $("<p class='score-display'>").html( Math.round(data["matching_score"]/data["matching_total"] * 100) + "%" )
+    ordering = $("<p class='score-display'>").html( Math.round(data["ordering_score"]/data["ordering_total"] * 100) + "%" )
+    muscle = $("<p class='score-display'>").html(Math.round(data["muscle_score"]/data["muscle_total"] * 100) + "%" )
+    
+    matching_text = $("<p class='score-description'>").html("Matching")
+    ordering_text = $("<p class='score-description'>").html("Ordering")
+    muscle_text = $("<p class='score-description'>").html("Muscle Identification")
+    matching_btn = $("<button type='button' class='btn btn-outline-purple'>").html("Review")
+    matching_btn.click(function() {
+        window.location.href = "/quiz/1"
+    })
+    ordering_btn = $("<button type='button' class='btn btn-outline-purple'>").html("Review")
+    ordering_btn.click(function() {
+        window.location.href = "/quiz/2"
+    })
+    muscle_btn = $("<button type='button' class='btn btn-outline-purple'>").html("Review")
+    muscle_btn.click(function() {
+        window.location.href = "/quiz/4"
+    })
 
-    let header = $("<div class='quiz-heading learn-more'>").html("Areas to improve:")
+    col_matching.append(matching, matching_text, matching_btn)
+    col_ordering.append(ordering, ordering_text, ordering_btn)
+    col_muscle.append(muscle, muscle_text, muscle_btn)
+
+    row.append(col_matching, col_ordering, col_muscle)
+    c.append($("<hr>"), row, $("<br>"), $("<hr>"))
+
+    header = $("<div class='quiz-heading learn-more'>").html("Areas to improve:")
     c.append(header)
+
 
     if(data["matching_score"]<=data["ordering_score"] && data["matching_score"]<=data["muscle_score"]){
         let area = $("<div class='learn-more padding'>").html("- Matching the names to the poses")
