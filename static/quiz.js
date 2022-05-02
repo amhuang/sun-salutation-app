@@ -432,11 +432,8 @@ var MuscleId = function () {
         // Display header, pose images
         let c = $("#content")
         c.empty()
-        showQuestion()
-        
-        
+        showQuestion()   
         animateLabel()
-        console.log(data)
         
         // Display right/wrong feedback for the user's selected muscles
         data["responses"].forEach((muscle, i) => {
@@ -452,15 +449,23 @@ var MuscleId = function () {
             let muscleClass = "." + muscle.toLowerCase().replace(" ", "-")
             $(muscleClass).addClass("missed")
         })
-        bindNextBtn()
 
-        /*let row = c.find(".row")
-        let feedback = $("<div class='col-md-4'>")
-        let correct = $("<div id='correct'>").html("<p><b> Correctly Chosen Muscles</b></p>")
-        let incorrect = $("<div id='incorrect'>").html("<b>Incorrectly Chosen Muscles</b>")
-        let missed = $("<div id='missed'>").html("<b>Missed Muscles</b>")
-        feedback.append(correct, missed, incorrect)
-        row.append(feedback)*/
+        // show Answers
+        let label_cont = $("<div class='label_container'>")
+        label_cont.append($("<br>"),$("<br>"))
+        label_cont.append($("<h5>").html("Correct Answers"))
+        data["correct"].forEach((right, i) => {
+            if (right) {
+                let label = $("<div class='quiz-label-static correct'>").html(data["responses"][i])
+                label_cont.append(label)
+            }
+        })
+        data["unused"].forEach((muscle) => {
+            let label = $("<div class='quiz-label-static missing'>").html(muscle)
+            label_cont.append(label)
+        })
+        $("#pose-data").append(label_cont)
+        bindNextBtn()
     }
 
     function showQuestion() {
@@ -469,28 +474,19 @@ var MuscleId = function () {
         let hint = "\nHint: " + data["answers"].length + " muscles should be selected."
         let question = $("<div class='quiz-question'>").html(data["question"] + hint)
         
-        let pose = $("<div class='col-md-3'>")
-        let img = $("<img />").attr({src: data["imgs"][1], class: "muscle-side-pose"})
+        let pose = $("<div class='col-md-4' id='pose-data'>")
+        let img = $("<div class='text-center'>").append( $("<img />").attr({src: data["imgs"][1], class: "muscle-side-pose"}) )
         pose.append(img)
 
-        let diagram = $("<div class='col-md'>").html( data["imgs"][0])  // adds SVG image
+        let diagram = $("<div class='col-md-8'>").html( data["imgs"][0])  // adds SVG image
         let label = $("<div class='muscle-label'>").hide()
         diagram.append(label)
         
-        let row = $("<div class='row gx-3'>")
+        let row = $("<div class='row gx-3' id='question-graphics'>")
         row.append(pose, diagram)
         c.append(header, question, row)
 
     }
-    /*function showOptions(options) {
-        let row = $("<div class='row'>")
-        let col = $("<div class='col-md'>")
-        options.forEach((muscle) => {
-            let label = $("<div class='quiz-label'>").html(muscle)
-            col.append(label)
-        })
-        c.append(row.append(col))
-    }*/
 
     // Adds animation to muscle diagram SVG. options and selected are class-wide variables
     function animateLabel() {
