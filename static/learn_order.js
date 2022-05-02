@@ -68,7 +68,6 @@ function createCards(){
   }
 
 
-
   for (i = 1; i<= 12; i++){
     let col = $("<div class='col-md-2'>")
     let card = $("<div class='flip-card'>")
@@ -88,9 +87,14 @@ function createCards(){
     name.html(d[i]["Name"])
     let views = $("<p class = 'normal_p'>")
     views.html("Viewed: " + d[i]["views"])
+    let review = $("<button type='button' class='btn btn-in-purple'>")
+    review.html("Review")
+    var j = i
+    makeReviewBtn(j, review)
 
     back.append(name)
     back.append(views)
+    back.append(review)
     front.append(img)
     inner.append(front)
     inner.append(back)
@@ -104,6 +108,12 @@ function createCards(){
       $("#row2").append(col)
     }
   }
+}
+
+function makeReviewBtn(j, review){
+  review.click(function(){
+    window.location.href = "/learn/" + j
+  })
 }
 
 function bindHomeBtn () {
