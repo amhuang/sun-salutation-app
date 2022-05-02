@@ -286,6 +286,13 @@ def quiz(id=None):
         print(quiz_data[id]["user_data"]["score"])
         return jsonify(data=data)
 
+@app.route("/quiz/restart", methods = ['GET'])
+def quiz_restart():
+    for q in quiz_data:
+        quiz_data[q]["user_data"] = ""
+    data = quiz_data[1]
+    return render_template('quiz.html', data=data)
+
 @app.route('/quiz_result', methods = ['GET'])
 def quiz_results():
     matching_score = 0
