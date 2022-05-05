@@ -159,7 +159,7 @@ p {
     padding-bottom: 1rem;
 }
 
-#pose-data {
+#pose-hint {
     margin-top: 1rem;
 }
 
@@ -173,7 +173,8 @@ p {
 }
 
 .svg {
-    max-height: 450px;
+    max-height: 440px;
+    padding-bottom: 10px;
 }
 
 .st1.hover {
@@ -186,15 +187,45 @@ p {
 }
 
 .st1.incorrect {
-    fill: rgb(245, 180, 185);
+    fill: rgb(246, 161, 168);
 }
 
 .st1.missed {
-    fill: rgb(250, 229, 157);
+    fill: rgb(255, 225, 125);
 }
 
 .st1.correct {
-    fill: rgb(159, 218, 174);
+    fill: rgb(133, 211, 152);
+}
+#muscle-feedback {
+    margin-left: 20px;
+}
+.answer-label-container {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.d-flex.key {
+    margin: 14px 0;
+}
+.color-key {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    border-radius: 0.5rem;
+    margin-right: 14px;
+    margin-left: 10px;
+}
+.color-key.red {
+    background-color: rgb(246, 161, 168);
+    border: 2px solid rgb(246, 161, 168);
+}
+.color-key.yellow {
+    background-color: rgb(255, 225, 125);
+    border: 2px solid rgb(255, 225, 125);
+}
+.color-key.green {
+    background-color: rgb(133, 211, 152);
+    border: 2px solid rgb(133, 211, 152);
 }
 
 .muscle-label {
@@ -386,7 +417,7 @@ body {
 }
 
 #next-btn {
-    margin-bottom: 30px;
+    margin-bottom: 45px;
     margin-left: 15px;
 }
 

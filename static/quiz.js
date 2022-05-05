@@ -426,7 +426,7 @@ var Ordering = function() {
 
 var MuscleId = function () {
     // Displays an identifying muscles activated by poses question
-    var options = ["abs", "calves", "hamstrings", "lats", "lower-back", "lower-traps", "obliques", "quads", "shoulders", "spine"]
+    var options = ["abs", "calves", "hamstrings", "lats", "lower-back", "lower-traps", "obliques", "quads", "shoulders", "spine", "glutes", 'hip-flexors',"triceps"]
     var selected = []
     
     function load() {
@@ -462,10 +462,28 @@ var MuscleId = function () {
             $(muscleClass).addClass("missed")
         })
 
-        // show Answers
-        let label_cont = $("<div class='label_container'>")
-        label_cont.append($("<br>"),$("<br>"))
-        label_cont.append($("<h5>").html("Correct Answers"))
+        // Display key for diagram colors
+        let col = $("<div class='col-md-4' id='muscle-feedback'>")
+        let row_red = $("<div class='d-flex key'>")
+        let key_color = $("<div class='color-key red'>")
+        let description = $("<span>").html("Incorrectly selected")
+        row_red.append(key_color, description)
+
+        let row_yellow = $("<div class='d-flex key'>")
+        key_color = $("<div class='color-key yellow'>")
+        description = $("<span>").html("Other acceptable answers")
+        row_yellow.append(key_color, description)
+
+        let row_green = $("<div class='d-flex key'>")
+        key_color = $("<div class='color-key green'>")
+        description = $("<span>").html("Correctly selected (" + data["score"]*3 + "/3)")
+        row_green.append(key_color, description)
+
+        col.append(row_green, row_yellow, row_red)
+
+        // Display correct answers as labels
+        let label_cont = $("<div class='answer-label-container'>")
+        label_cont.append($("<h5>").html("Acceptable Answers"))
         data["correct"].forEach((right, i) => {
             if (right) {
                 let label = $("<div class='quiz-label-static correct'>").html(data["responses"][i])
@@ -476,7 +494,10 @@ var MuscleId = function () {
             let label = $("<div class='quiz-label-static missing'>").html(muscle)
             label_cont.append(label)
         })
-        $("#pose-data").append(label_cont)
+        col.append(label_cont)
+        
+        $("#question-graphics").append(col)
+        
         insertReviewBtn()
         bindNextBtn()
     }
@@ -484,14 +505,14 @@ var MuscleId = function () {
     function showQuestion() {
         let c = $("#content")
         let header = $("<div class='quiz-heading'>").html("Part 3: Muscle Identification")
-        let hint = "\nHint: " + data["answers"].length + " muscles should be selected."
+        let hint = "\nHint: There are " + data["answers"].length + " answers that are acceptable."
         let question = $("<div class='quiz-question'>").html(data["question"] + hint)
         
-        let pose = $("<div class='col-md-4' id='pose-data'>")
+        let pose = $("<div class='col-md-3' id='pose-hint'>")
         let img = $("<div class='text-center'>").append( $("<img />").attr({src: data["imgs"][1], class: "muscle-side-pose"}) )
         pose.append(img)
 
-        let diagram = $("<div class='col-md-8'>").html( data["imgs"][0])  // adds SVG image
+        let diagram = $("<div class='col-md-4'>").html( data["imgs"][0])  // adds SVG image
         let label = $("<div class='muscle-label'>").hide()
         diagram.append(label)
         
@@ -548,11 +569,12 @@ var MuscleId = function () {
     function check() {
         selected.sort()
         data["answers"].sort()
+        console.log(selected, data["answers"])
 
         // Evaluate selected answers
         let correct = []
         let score = 0
-        let total = data["answers"].length
+        let total = 3 // data["answers"].length
         selected.forEach((response, i) => {
             if (data["answers"].includes(response)) {
                 correct.push(true)
@@ -562,10 +584,15 @@ var MuscleId = function () {
                 correct.push(false)
             }
         })
-
+        if (score > 3) {
+            score = 3
+        }
+        
         // missed = the correct muscles that were unselected
         let missed = data["answers"].filter(ans => !selected.includes(ans)) 
-        saveAnswers("muscle", score/total, selected, correct, missed)
+        console.log(selected, correct, missed)
+
+        saveAnswers("muscle", score/3, selected, correct, missed)
     }
     
     return {
