@@ -16,7 +16,7 @@ learn_data = {
    "1": {
       "id": "1",
       "Name": "Prayer Pose",
-      "Muscles": ["Pelvis", "Legs"],
+      "Muscles": ["Shoulders", "Chest", "Spine"],
       "views" : "0",
       "img": "/static/img/poses/Prayer Pose.jpeg",
       "gif": "/static/img/GIFs/1-mountain",

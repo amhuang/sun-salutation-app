@@ -424,3 +424,13 @@ body {
 .normal_p {
     margin-top: 0px;
 }
+
+/******************** HOME ELEMENTS ********************/
+
+.grey-home{
+    margin-top: 100px;
+    border-radius: 25px;
+    background: rgb(243, 243, 243);
+    padding-top: 50px;
+    padding-bottom: 150px;
+}
