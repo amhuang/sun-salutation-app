@@ -93,7 +93,7 @@ learn_data = {
    "8": {
       "id": "8",
       "Name":"Downward Facing Dog",
-      "Muscles": ["Calves", "Hamstrings","Lats", "Spine", "Abs", "Hip Flexors", "Quads", "Triceps"],
+      "Muscles": ["Calves", "Hamstrings", "Lats", "Spine", "Abs", "Hip Flexors", "Quads", "Triceps"],
       "views" : "0",
       "img": "/static/img/poses/Downward Facing Dog.jpeg",
       "gif": "/static/img/GIFs/8-downward",
